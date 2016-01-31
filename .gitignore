@@ -1,0 +1,28 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# FILE:   .gitignore
+# AUTHOR: Kris Torres
+# DATE:   2016/01/30
+#
+# This file includes the list of intentionally untracked files that Git ignores.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Configurations
+# ~~~~~~~~~~~~~~
+/project/project
+/project/target
+
+# Public assets
+# ~~~~~~~~~~~~~
+/app/assets
+
+# Unit tests
+# ~~~~~~~~~~
+/test/resources
+/test-2.11
+
+# Miscellaneous
+# ~~~~~~~~~~~~~
+/.idea
+/app-2.11
+/logs
+/target

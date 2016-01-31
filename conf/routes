@@ -1,0 +1,15 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# FILE:   conf/routes
+# AUTHOR: Kris Torres
+# DATE:   2016/01/30
+#
+# This file defines all the application routes (higher priority routes first).
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Index page
+# ~~~~~~~~~~
+GET  /              controllers.Nippon48Controller.index
+
+# Map static resources from the /public folder to the /assets URL path
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GET  /assets/*file  controllers.Assets.at(path: String = "/public", file: String)
