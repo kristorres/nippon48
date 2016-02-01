@@ -14,9 +14,10 @@ import java.util.{Calendar, Date}
 import org.ektorp.support.CouchDbDocument
 import org.joda.time.{LocalDate, Years}
 import scala.collection.JavaConverters._
+import services.Cloudant
 
 /**
- * A '''Nippon48Member''' is a member of the Japanese idol girl group ''AKB48''
+ * A '''Nippon48 member''' is a member of the Japanese idol girl group ''AKB48''
  * (est. 2005 from Akihabara, Tokyo), one of its domestic sister groups, or one
  * of its rival groups. AKB48 consists of five teams: Team A, Team B, Team K,
  * Team 4, and Team 8.<br/><br/>
@@ -234,8 +235,8 @@ class Nippon48Member extends CouchDbDocument {
  * The companion object of the [[models.Nippon48Member]] class. It contains
  * constants for the minimum age and maximum age requirements for a Nippon48
  * member, as well as lists of all the Japanese idol girl groups and teams that
- * are produced by Yasushi Akimoto. The object also contains an `apply` method
- * for creating a Nippon48 member.
+ * are produced by Yasushi Akimoto. The object also contains `apply` methods for
+ * creating and fetching a Nippon48 member.
  */
 object Nippon48Member {
 
@@ -255,6 +256,18 @@ object Nippon48Member {
    */
   val validTeams = Seq("A", "K", "B", "4", "8", "S", "KII", "E", "N", "M",
     "BII", "H", "KIV", "NIII", "Theater Manager", "Unknown", "Kenkyuusei")
+
+  /**
+   * Fetches the Nippon48 member associated with the specified ID. (This method
+   * essentially does the same thing as the [[services.Cloudant#fetch]] method
+   * in the `Cloudant` singleton object.
+   *
+   * @param id  the ID of the Nippon48 member to be fetched
+   *
+   * @return an ''optional'' that contains the Nippon48 member, or `None` if
+   *         there is no member in the database associated with the ID
+   */
+  def apply(id: String): Option[Nippon48Member] = Cloudant fetch id
 
   /**
    * Creates a Nippon48 member with the specified given name, family name
