@@ -11,7 +11,7 @@
 
 name := "nippon48"
 
-version := "1.0-α"
+version := "1.0-β1"
 
 scalaVersion := "2.11.7"
 
