@@ -65,9 +65,9 @@ import services.Cloudant
  *
  * The `Nippon48Member` class is intended to behave like a JSON that can be
  * added as a document to a CouchDB database. It defines mappings for the
- * `name_en`, `name_jp`, `birthdate`, `age`, list of `groups`, list of `teams`,
- * captain status (denoted by `isCaptain`), and `generation`. Therefore, the
- * JSON takes on the following format:
+ * `name_en`, `name_jp`, `birthdate`, list of `groups`, list of `teams`,
+ * `captain` status, and `generation`. Therefore, the JSON takes on the
+ * following format:
  *
  * {{{
  * &#123;
@@ -76,10 +76,9 @@ import services.Cloudant
  *   &quot;name_en&quot;: &quot;Yui Yokoyama&quot;,
  *   &quot;name_jp&quot;: &quot;横山由依&quot;,
  *   &quot;birthdate&quot;: &quot;1992-12-08&quot;,
- *   &quot;age&quot;: 23,
  *   &quot;groups&quot;: [&quot;AKB48&quot;],
  *   &quot;teams&quot;: [&quot;A&quot;],
- *   &quot;isCaptain&quot;: true,
+ *   &quot;captain&quot;: true,
  *   &quot;generation&quot;: 9
  * &#125;
  * }}}
@@ -102,26 +101,6 @@ class Nippon48Member extends CouchDbDocument {
   /** The birthdate of this Nippon48 member as a string. */
   @JsonProperty("birthdate") private var _birthdate: String = _
 
-  /**
-   * Gets the age of this Nippon48 member.
-   *
-   * @return the age
-   */
-  @JsonProperty("age")
-  def age: Int = {
-
-    val dashIndex1 = _birthdate indexOf '-'
-    val dashIndex2 = _birthdate lastIndexOf '-'
-
-    val year = _birthdate.substring(0, dashIndex1).toInt
-    val month = _birthdate.substring(dashIndex1 + 1, dashIndex2).toInt
-    val day = _birthdate.substring(dashIndex2 + 1).toInt
-
-    val today = new LocalDate
-    val birthdate = new LocalDate(year, month, day)
-    Years.yearsBetween(birthdate, today).getYears
-  }
-
   /** The list of idol girl groups that this Nippon48 member is currently in. */
   @JsonProperty("groups") var groups = List[String]().asJava
 
@@ -129,9 +108,12 @@ class Nippon48Member extends CouchDbDocument {
   @JsonProperty("teams") var teams = List[String]().asJava
 
   /** The captain status of this Nippon48 member. */
-  @JsonProperty("isCaptain") var isCaptain = false
+  @JsonProperty("captain") var isCaptain = false
 
-  /** The cardinal number of the generation of this Nippon48 member. */
+  /**
+   * The cardinal number of the generation of this Nippon48 member in her
+   * primary team.
+   */
   @JsonProperty("generation") var generation = 1
 
   //================================= Mutators =================================
@@ -171,6 +153,26 @@ class Nippon48Member extends CouchDbDocument {
   //================================ Accessors =================================
 
   /**
+   * Gets the age of this Nippon48 member.
+   *
+   * @return the age
+   */
+  @JsonIgnore
+  def age: Int = {
+
+    val dashIndex1 = _birthdate indexOf '-'
+    val dashIndex2 = _birthdate lastIndexOf '-'
+
+    val year = _birthdate.substring(0, dashIndex1).toInt
+    val month = _birthdate.substring(dashIndex1 + 1, dashIndex2).toInt
+    val day = _birthdate.substring(dashIndex2 + 1).toInt
+
+    val today = new LocalDate
+    val birthdate = new LocalDate(year, month, day)
+    Years.yearsBetween(birthdate, today).getYears
+  }
+
+  /**
    * Gets the birthdate of this Nippon48 member as a string in the format
    * `"YYYY-MM-DD"`.
    *
@@ -196,16 +198,23 @@ class Nippon48Member extends CouchDbDocument {
   @JsonIgnore
   def toJSON: String = {
 
+    val groups = this.groups.asScala
+      .map(group => s""""$group"""")
+      .mkString("[", ", ", "]")
+
+    val teams = this.teams.asScala
+      .map(team => s""""$team"""")
+      .mkString("[", ", ", "]")
+
     s"""|{
         |  "_id": "$getId",
         |  "_rev": "$getRevision",
         |  "name_en": "$name",
         |  "name_jp": "$nameInJapanese",
         |  "birthdate": "$birthdate",
-        |  "age": $age,
         |  "groups": $groups,
         |  "teams": $teams,
-        |  "isCaptain": $isCaptain,
+        |  "captain": $isCaptain,
         |  "generation": $generation
         |}""".stripMargin
   }
@@ -272,7 +281,7 @@ object Nippon48Member {
   /**
    * Creates a Nippon48 member with the specified given name, family name
    * (surname), name in Japanese characters, birthdate, idol girl groups, teams,
-   * captain status, and generation number.
+   * captain status, and generation number in her primary team.
    *
    * @param firstName       the given name
    * @param lastName        the family name
@@ -283,7 +292,7 @@ object Nippon48Member {
    * @param isCaptain       the captain status
    * @param generation      the generation number
    *
-   * @return
+   * @return the Nippon48 member
    */
   def apply(firstName: String, lastName: String, nameInJapanese: String,
     birthdate: Date, groups: java.util.List[String],
@@ -291,7 +300,7 @@ object Nippon48Member {
     generation: Int): Nippon48Member = {
 
     val member = new Nippon48Member
-    member setId s"$lastName-$firstName"
+    member setId s"${lastName.toLowerCase}-${firstName.toLowerCase}"
     member.setName(firstName, lastName)
     member.nameInJapanese = nameInJapanese
     member setBirthdate birthdate
