@@ -8,8 +8,8 @@
 
 import java.util.Calendar
 import models.Nippon48Member
+import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
-import scala.collection.JavaConverters._
 
 /**
  * The unit specification class for the [[models.Nippon48Member]] model class.
@@ -33,10 +33,9 @@ class MemberSpec extends Specification {
       calendar.set(Calendar.DAY_OF_MONTH, 8)
 
       val birthdate = calendar.getTime
-      val groups = List("AKB48").asJava
-      val teams = List("A").asJava
-      val member = Nippon48Member("Yui", "Yokoyama", "横山由依", birthdate,
-        groups, teams, isCaptain = true, 9)
+      val data = Nippon48MemberData("Yui", "Yokoyama", Some("横山由依"),
+        birthdate, "AKB48", None, Some("A"), None, "Yes", 9)
+      val member = Nippon48Member(data)
       member setRevision "..."
 
       val json = """|{
@@ -62,10 +61,9 @@ class MemberSpec extends Specification {
       calendar.set(Calendar.DAY_OF_MONTH, 14)
 
       val birthdate = calendar.getTime
-      val groups = List("NMB48", "AKB48").asJava
-      val teams = List("N", "K").asJava
-      val member = Nippon48Member("Sayaka", "Yamamoto", "山本彩", birthdate,
-        groups, teams, isCaptain = true, 1)
+      val data = Nippon48MemberData("Sayaka", "Yamamoto", Some("山本彩"),
+        birthdate, "NMB48", Some("AKB48"), Some("N"), Some("K"), "Yes", 1)
+      val member = Nippon48Member(data)
       member setRevision "..."
 
       val json = """|{
@@ -91,10 +89,9 @@ class MemberSpec extends Specification {
       calendar.set(Calendar.DAY_OF_MONTH, 29)
 
       val birthdate = calendar.getTime
-      val groups = List("Nogizaka46").asJava
-      val teams = List[String]().asJava
-      val member = Nippon48Member("Rina", "Ikoma", "生駒里奈", birthdate, groups,
-        teams, isCaptain = false, 1)
+      val data = Nippon48MemberData("Rina", "Ikoma", Some("生駒里奈"), birthdate,
+        "Nogizaka46", None, None, None, "No", 1)
+      val member = Nippon48Member(data)
       member setRevision "..."
 
       val json = """|{

@@ -10,6 +10,7 @@ package models
 
 import com.fasterxml.jackson.annotation._
 import com.fasterxml.jackson.annotation.JsonInclude.Include
+import forms.Nippon48MemberData
 import java.util.{Calendar, Date}
 import org.ektorp.support.CouchDbDocument
 import org.joda.time.{LocalDate, Years}
@@ -279,6 +280,30 @@ object Nippon48Member {
   def apply(id: String): Option[Nippon48Member] = Cloudant fetch id
 
   /**
+   * Creates a Nippon48 member with the specified HTML form data.
+   *
+   * @param data  the HTML form data
+   *
+   * @return the Nippon48 member
+   */
+  def apply(data: Nippon48MemberData): Nippon48Member = {
+
+    var groups = List(data.primaryGroup)
+    var teams = List[String]()
+
+    if (data.secondaryGroup.isDefined)
+      groups = groups :+ data.secondaryGroup.get
+    if (data.primaryTeam.isDefined)
+      teams = teams :+ data.primaryTeam.get
+    if (data.secondaryTeam.isDefined)
+      teams = teams :+ data.secondaryTeam.get
+
+    Nippon48Member(data.firstName, data.lastName, data.nameInJapanese.orNull,
+      data.birthdate, groups.asJava, teams.asJava, data.isCaptain == "Yes",
+      data.generation)
+  }
+
+  /**
    * Creates a Nippon48 member with the specified given name, family name
    * (surname), name in Japanese characters, birthdate, idol girl groups, teams,
    * captain status, and generation number in her primary team.
@@ -289,7 +314,8 @@ object Nippon48Member {
    * @param birthdate       the birthdate
    * @param groups          the groups
    * @param teams           the teams
-   * @param isCaptain       the captain status
+   * @param isCaptain       `true` if the Nippon48 member is a captain, or
+   *                        `false` otherwise
    * @param generation      the generation number
    *
    * @return the Nippon48 member
