@@ -10,10 +10,15 @@ package services
 
 import com.typesafe.config.ConfigFactory
 import models.Nippon48Member
-import org.ektorp.ViewQuery
+import org.ektorp.{CouchDbConnector, ViewQuery}
 import org.ektorp.http.StdHttpClient
 import org.ektorp.impl.StdCouchDbInstance
+import play.api.Logger
+import play.api.Play.current
+import play.api.libs.concurrent.Akka
 import scala.collection.JavaConverters._
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import scala.util.Try
 
 /**
@@ -26,18 +31,19 @@ object Cloudant {
 
   //============================== Private fields ==============================
 
-  /** The Cloudant account. */
-  private lazy val account = {
-    val username = ConfigFactory.load getString "cloudant.username"
-    new StdHttpClient.Builder().url(s"https://$username.cloudant.com").build
-  }
-
-  /** The Cloudant database of Nippon48 members. */
-  private lazy val database = new StdCouchDbInstance(account)
-    .createConnector(ConfigFactory.load getString "cloudant.database", false)
+  /** The loaded configuration for Cloudant. */
+  private lazy val configuration = ConfigFactory.load
 
   /** The query for all the Nippon48 members in the Cloudant database. */
   private lazy val query = new ViewQuery designDocId "_design/members"
+
+  /** The Cloudant account. */
+  private var account: StdHttpClient.Builder = _
+
+  /** The Cloudant database of Nippon48 members. */
+  private var database: Option[CouchDbConnector] = None
+
+  load()
 
   //============================= CRUD operations ==============================
 
@@ -45,8 +51,15 @@ object Cloudant {
    * Adds a Nippon48 member to the Cloudant database.
    *
    * @param member  the Nippon48 member to be added
+   *
+   * @throws org.ektorp.UpdateConflictException if there is a Nippon48 member in
+   *         the database associated with the same ID as the specified Nippon48
+   *         member
    */
-  def add(member: Nippon48Member): Unit = { database create member }
+  def add(member: Nippon48Member): Unit = {
+    if (database.isEmpty) connectToDatabase()
+    database.get create member
+  }
 
   /**
    * Optionally returns the Nippon48 member associated with the specified ID in
@@ -58,7 +71,8 @@ object Cloudant {
    *         there is no member in the database associated with the ID
    */
   def fetch(id: String): Option[Nippon48Member] = {
-    Try { database.get(classOf[Nippon48Member], id) }.toOption
+    if (database.isEmpty) connectToDatabase()
+    Try { database.get.get(classOf[Nippon48Member], id) }.toOption
   }
 
   /**
@@ -69,8 +83,9 @@ object Cloudant {
    * @param id  the ID of the Nippon48 member to be removed
    */
   def remove(id: String): Unit = {
+    if (database.isEmpty) connectToDatabase()
     fetch(id) match {
-      case Some(member) => database delete member
+      case Some(member) => database.get delete member
       case None =>
     }
   }
@@ -80,15 +95,18 @@ object Cloudant {
    * of the Nippon48 member associated with the specified ID. This method does
    * nothing if there is no such member in the Cloudant database.
    *
-   * @param id          the id of the Nippon48 member to be updated
+   * @param id          the ID of the Nippon48 member to be updated
    * @param groups      the new groups
    * @param teams       the new teams
-   * @param isCaptain   the new captain status
+   * @param isCaptain   `true` if the Nippon48 member is a captain, or `false`
+   *                    otherwise
    * @param generation  the new generation number
    */
   def update(id: String, groups: java.util.List[String],
     teams: java.util.List[String], isCaptain: Boolean,
     generation: Int): Unit = {
+
+    if (database.isEmpty) connectToDatabase()
 
     fetch(id) match {
       case Some(member) =>
@@ -96,21 +114,128 @@ object Cloudant {
         member.teams = teams
         member.isCaptain = isCaptain
         member.generation = generation
-        database update member
+        database.get update member
       case None =>
     }
   }
 
-  //============================ View result method ============================
+  //============================== Other methods ===============================
+
+  /** Connects to the configured Cloudant database. */
+  def connectToDatabase(): Unit = {
+
+    val initialTime = System.nanoTime
+    val username = configuration getString "cloudant.username"
+    val url = s"https://$username.cloudant.com"
+    Logger info s"Cloudant database URL: $url"
+
+    account = new StdHttpClient.Builder url url
+    setConnectionTimeout()
+    setSocketTimeout()
+    setMaximumObjectSize()
+    setMaximumNumberOfConnections()
+    cleanUpIdleConnections()
+
+    database = Some(new StdCouchDbInstance(account.build)
+      .createConnector(configuration getString "cloudant.database", false))
+
+    val finalTime = System.nanoTime
+    val timeInSeconds = (finalTime - initialTime) / 10e8
+    Logger debug f"Connected in $timeInSeconds%.3f s."
+  }
 
   /**
-   * Accesses all the Nippon48 members of the specified idol girl group in the
-   * Cloudant database.
+   * Accesses all the Nippon48 members in the Cloudant database.
    *
    * @return the list of Nippon48 members
+   *
+   * @throws java.util.NoSuchElementException if there is no active connection
+   *         to the database
    */
   def getMembers: List[Nippon48Member] = {
-    val result = database.queryView(query viewName "all")
+    val result = database.get.queryView(query viewName "all")
     result.getRows.asScala.toList.map(row => fetch(row.getId).get)
+  }
+
+  //============================= Private methods ==============================
+
+  /** Cleans up any idle connections if the configuration is set to `true`. */
+  private def cleanUpIdleConnections(): Unit = {
+    val key = "cloudant.build.clean-up-idle-connections"
+    val cleanUpIdleConnections = Try { configuration getBoolean key }.toOption
+    cleanUpIdleConnections.map { ans =>
+      val answer = if (ans) "Yes" else "No"
+      Logger info s"Clean up idle connections? $answer"
+      account cleanupIdleConnections ans
+    }
+  }
+
+  /**
+   * Loads the Cloudant database, then constantly scans it every minute to make
+   * sure the connection is still up.
+   */
+  private def load(): Unit = {
+    if (database.isEmpty) connectToDatabase()
+    Logger info "Validating CouchDB view..."
+    Akka.system.scheduler.schedule(0.minutes, 1.minute, CouchDBViewRunnable)
+  }
+
+  /** Sets the configured connection timeout. */
+  private def setConnectionTimeout(): Unit = {
+    val key = "cloudant.build.connection-timeout"
+    val connectionTimeout = Try { configuration getInt key }.toOption
+    connectionTimeout.map { t =>
+      Logger info s"Connection timeout: $t ms"
+      account connectionTimeout t
+    }
+  }
+
+  /** Sets the configured maximum number of connections. */
+  private def setMaximumNumberOfConnections(): Unit = {
+    val key = "cloudant.build.max-num-connections"
+    val maxNumConnections = Try { configuration getInt key }.toOption
+    maxNumConnections.map { n =>
+      Logger info s"Maximum number of connections: $n"
+      account maxConnections n
+    }
+  }
+
+  /** Sets the configured maximum object size. */
+  private def setMaximumObjectSize(): Unit = {
+    val key = "cloudant.build.max-object-size"
+    val maxObjectSize = Try { configuration getInt key }.toOption
+    maxObjectSize.map { n =>
+      Logger info s"Maximum object size: $n B"
+      account maxObjectSizeBytes n
+    }
+  }
+
+  /** Sets the configured socket timeout. */
+  private def setSocketTimeout(): Unit = {
+    val key = "cloudant.build.socket-timeout"
+    val socketTimeout = Try { configuration getInt key }.toOption
+    socketTimeout.map { t =>
+      Logger info s"Socket timeout: $t ms"
+      account socketTimeout t
+    }
+  }
+
+  //============================= Private runnable =============================
+
+  /**
+   * The inner singleton object that validates the CouchDB view of all the
+   * Nippon48 members in the Cloudant database.
+   */
+  private object CouchDBViewRunnable extends Runnable {
+    override def run(): Unit = {
+      try {
+        getMembers
+      } catch {
+        case _: NoSuchElementException =>
+          Logger error "Unable to validate CouchDB view"
+          Logger error "Attempting to reconnect to Cloudant"
+          connectToDatabase()
+      }
+    }
   }
 }
