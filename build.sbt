@@ -3,28 +3,15 @@
 // AUTHOR: Kris Torres
 // DATE:   2016/01/30
 //
-// This file includes all the build settings, library dependencies, and
-// resolvers for the Nippon48 application.
+// This file includes all the build settings for the root project.
 //==============================================================================
-
-//=============================== Build settings ===============================
 
 name := "nippon48"
 
-version := "1.0-β1"
+organization := HelloBuild.Settings.ORGANIZATION
 
-scalaVersion := "2.11.7"
+version := HelloBuild.Settings.VERSION
 
-description := "The official Play web application dedicated to AKB48!"
+scalaVersion := HelloBuild.Settings.SCALA_VERSION
 
-//============================ Library dependencies ============================
-
-libraryDependencies += "org.ektorp" % "org.ektorp" % "1.4.2"
-
-//================================= Resolvers ==================================
-
-resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
-
-//============================= Project definition =============================
-
-lazy val root = (project in file(".")) enablePlugins PlayScala
+description := HelloBuild.NIPPON48_DESCRIPTION

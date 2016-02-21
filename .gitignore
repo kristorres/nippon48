@@ -6,23 +6,28 @@
 # This file includes the list of intentionally untracked files that Git ignores.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Configurations
-# ~~~~~~~~~~~~~~
+# Root project
+# ~~~~~~~~~~~~
+/.idea
+/logs
 /project/project
 /project/target
-
-# Public assets
-# ~~~~~~~~~~~~~
-/app/assets
-
-# Unit tests
-# ~~~~~~~~~~
-/test/resources
-/test-2.11
-
-# Miscellaneous
-# ~~~~~~~~~~~~~
-/.idea
-/app-2.11
-/logs
+/src
 /target
+
+# Nippon48 application
+# ~~~~~~~~~~~~~~~~~~~~
+/nippon48-ws/app/assets
+/nippon48-ws/logs
+/nippon48-ws/project
+/nippon48-ws/target
+/nippon48-ws/test/resources
+
+# Cloudant database cleaner
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
+/scripts/logs
+/scripts/project
+/scripts/src/main/java
+/scripts/src/main/resources
+/scripts/src/test
+/scripts/target

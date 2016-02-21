@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   test/CloudantSpec.scala
+// FILE:   nippon48-ws/test/CloudantSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/02/01
 //
@@ -22,7 +22,7 @@ import services.Cloudant
  * root directory of this project:
  *
  * {{{
- * sbt "test-only CloudantSpec"
+ * sbt "project nippon48-ws" "test-only CloudantSpec"
  * }}}
  */
 class CloudantSpec extends Specification {

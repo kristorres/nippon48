@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   app/models/Nippon48Member.scala
+// FILE:   nippon48-ws/app/models/Nippon48Member.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/01/31
 //

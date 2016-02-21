@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   test/MemberSpec.scala
+// FILE:   nippon48-ws/test/MemberSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/02/01
 //
@@ -18,7 +18,7 @@ import org.specs2.mutable.Specification
  * this project:
  *
  * {{{
- * sbt "test-only MemberSpec"
+ * sbt "project nippon48-ws" "test-only MemberSpec"
  * }}}
  */
 class MemberSpec extends Specification {

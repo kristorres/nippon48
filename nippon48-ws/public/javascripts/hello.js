@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   public/javascripts/hello.js
+// FILE:   nippon48-ws/public/javascripts/hello.js
 // AUTHOR: Kris Torres
 // DATE:   2016/01/30
 //

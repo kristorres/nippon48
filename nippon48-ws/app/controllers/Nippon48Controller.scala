@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   app/controllers/Nippon48Controller.scala
+// FILE:   nippon48-ws/app/controllers/Nippon48Controller.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/01/30
 //

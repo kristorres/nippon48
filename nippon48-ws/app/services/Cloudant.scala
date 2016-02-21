@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   app/services/Cloudant.scala
+// FILE:   nippon48-ws/app/services/Cloudant.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/01/31
 //

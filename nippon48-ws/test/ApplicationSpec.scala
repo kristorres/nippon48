@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   test/ApplicationSpec.scala
+// FILE:   nippon48-ws/test/ApplicationSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/01/30
 //
@@ -17,7 +17,7 @@ import play.api.test.Helpers._
  * the following command in the root directory of this project:
  *
  * {{{
- * sbt "test-only ApplicationSpec"
+ * sbt "project nippon48-ws" "test-only ApplicationSpec"
  * }}}
  */
 class ApplicationSpec extends Specification {
