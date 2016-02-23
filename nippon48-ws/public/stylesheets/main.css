@@ -1,0 +1,60 @@
+/*
+ * FILE:   nippon48-ws/public/stylesheets/main.css
+ * AUTHOR: Kris Torres
+ * DATE:   2016/02/22
+ *
+ * This stylesheet defines all the overriden selector properties of the minified
+ * Bootstrap CSS for the Nippon48 application.
+ */
+
+/*------------------------------ General styles ------------------------------*/
+
+article {
+  padding-bottom: 16px;
+  padding-top: 16px;
+}
+
+article .groups {
+  margin: 24px 0;
+}
+
+article ul li {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  font-size: 16px;
+  margin: 4px 0;
+}
+
+/*------------------------------- Text styles --------------------------------*/
+
+header h1 {
+  font-family: Chelsea Market, sans-serif;
+  line-height: 125%;
+}
+
+article h2 {
+  font: 24px Gill Sans;
+}
+
+article p {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  font-size: 16px;
+}
+
+footer p {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  font-size: 12px;
+}
+
+/*--------------------------- Navigation and menus ---------------------------*/
+
+nav #nav-groups ul li {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+/*---------------------------------- Footer ----------------------------------*/
+
+footer {
+  margin-top: 48px;
+  padding-bottom: 12px;
+  padding-top: 12px;
+}

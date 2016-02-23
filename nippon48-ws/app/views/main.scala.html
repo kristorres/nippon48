@@ -1,11 +1,12 @@
 @******************************************************************************
- * Generates an HTML page with the specified explicit tab title and implicit  *
- * body.                                                                      *
+ * Generates an HTML page with the specified explicit tab title, explicit     *
+ * header and implicit body.                                                  *
  *                                                                            *
  * @param title    the explicit tab title                                     *
+ * @param header   the explicit header                                        *
  * @param content  the implicit body                                          *
  ******************************************************************************@
-@(title: String)(content: Html)
+@(title: String, header: String)(content: Html)
 
 <!DOCTYPE html>
 
@@ -14,26 +15,85 @@
   <head>
 
     <meta charset="UTF-8"/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <title>@title</title>
 
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+    <!-- Chelsea Market font CSS -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="https://fonts.googleapis.com/css?family=Chelsea+Market"/>
+
+    <!-- Overriden CSS selector properties -->
     <link rel="stylesheet"
           media="screen"
           href="@routes.Assets.at("stylesheets/main.css")"/>
 
+    <!-- Favicon -->
     <link rel="shortcut icon"
           type="image/png"
           href="@routes.Assets.at("images/favicon.png")"/>
 
+    <!-- Latest compiled and minified jQuery -->
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
     </script>
 
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+    <script type="text/javascript"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+    </script>
+
+    <!-- Overriden JavaScript functions -->
     <script type="text/javascript"
             src="@routes.Assets.at("javascripts/hello.js")">
     </script>
 
   </head>
 
-  <body><div class="big-wrapper">@content</div></body>
+  <body>
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <button type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#nav-groups"
+                aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-groups">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a>All Members</a></li>
+            @for(group <- Nippon48Member.validGroups) { <li><a>@group</a></li> }
+            <li><a>Add a New Member</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Jumbotron header -->
+    <header class="jumbotron vertical-center">
+      <div class="container text-center"><h1>@header</h1></div>
+    </header>
+
+    <!-- Main section -->
+    <article class="container">
+      @content
+      <footer>
+        <div class="container text-center"><p>Created by Kris Torres.</p></div>
+      </footer>
+    </article>
+
+  </body>
 
 </html>

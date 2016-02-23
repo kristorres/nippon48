@@ -20,7 +20,7 @@ import services.Cloudant
 /**
  * A '''Nippon48 member''' is a member of the Japanese idol girl group ''AKB48''
  * (est. 2005 from Akihabara, Tokyo), one of its domestic sister groups, or one
- * of its rival groups. AKB48 consists of five teams: Team A, Team B, Team K,
+ * of its rival groups. AKB48 consists of five teams: Team A, Team K, Team B,
  * Team 4, and Team 8.<br/><br/>
  *
  * '''Domestic sister groups:'''

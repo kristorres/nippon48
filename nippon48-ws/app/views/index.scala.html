@@ -1,10 +1,78 @@
 @******************************************************************************
- * Generates an HTML body with the specified header.                          *
+ * Generates an HTML body that lists all the Nippon48 members and their stats *
+ * in a table.                                                                *
  *                                                                            *
- * @param title  the header                                                   *
+ * @param header  the header                                                  *
  ******************************************************************************@
-@(title: String)
+@(header: String)
 
-@main("Nippon48") {
-  <header><h1>@title</h1></header>
+@main("Nippon48", header) {
+
+  <p>
+    The <b>Nippon48 database</b> contains all the members in the Japanese idol
+    girl group <i>AKB48</i> (est. 2005 from Akihabara, Tokyo), its domestic
+    sister groups, and its rival groups. AKB48 consists of five teams:
+    Team A, Team K, Team B, Team 4, and Team 8.
+  </p>
+  <div class="groups">
+    <h2>Domestic Sister Groups</h2>
+      <ul>
+      <li>
+        <i>SKE48</i> (est. 2008 from Sakae, Nagoya) consists of three teams:
+        Team S, Team KII, and Team E.
+      </li>
+      <li>
+        <i>NMB48</i> (est. 2010 from Namba, Osaka) consists of three teams:
+        Team N, Team M, and Team BII.
+      </li>
+      <li>
+        <i>HKT48</i> (est. 2011 from Hakata, Fukuoka) consists of two teams:
+        Team H and Team KIV.
+      </li>
+      <li>
+        <i>NGT48</i> (est. 2015 from Niigata) consists of one team:
+        Team NIII.
+      </li>
+    </ul>
+  </div>
+  <div class="groups">
+    <h2>Rival Groups</h2>
+    <ul>
+      <li><i>Nogizaka46</i> (est. 2010 from Tokyo)</li>
+      <li><i>Keyakizaka46</i> (est. 2015 from Tokyo)</li>
+    </ul>
+  </div>
+  <p>
+    All idol girl groups have “teams” dedicated for their <i>kenkyuusei</i>
+    (trainees, lit. “research students” in Japanese). There is also a Team
+    Unknown, a temporary team created for Nippon48 members that are promoted or
+    transferred, but not to a specific team. Finally, members may have a
+    concurrent position in two different groups and teams at the same time.
+  </p>
+  <p>
+    The concept of a captain is used to describe a Nippon48 member that is the
+    “authority” of a certain team. There is also the concept of a co-captain,
+    but for the sake of simplicity, a co-captain is also considered a captain.
+  </p>
+  <p>
+    AKB48 and its domestic sister groups have their own theater managers.
+    Currently, Rino Sashihara is the only Nippon48 member to have a concurrent
+    position as a theater manager (of HKT48).
+  </p>
+  <p>
+    If you want to query any of the idol girl groups or add a Nippon48 member to
+    the database, simply click on the corresponding link in the navigation bar
+    above. Also, if a now former member has graduated (i.e., she recently left
+    her groups), then click on the <i>Delete</i> link in the respective table
+    row to delete her from the database.
+  </p>
+  <p>
+    @defining(services.Cloudant.getMembers.size) { numberOfMembers =>
+      @if(numberOfMembers == 1) {
+        There is currently 1 member in our database.
+      } else {
+        There are currently @numberOfMembers members in our database.
+      }
+    }
+  </p>
 }
