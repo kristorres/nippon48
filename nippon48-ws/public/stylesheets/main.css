@@ -9,12 +9,26 @@
 
 /*------------------------------ General styles ------------------------------*/
 
+body {
+  background-color: #F0F0F0;
+  padding-top: 50px;
+}
+
 article {
+  background-color: white;
   padding-bottom: 16px;
   padding-top: 16px;
 }
 
-article .groups {
+@media screen and (min-width: 768px) {
+  article {
+    border-radius: 16px;
+    max-width: 730px;
+    margin-bottom: 48px;
+  }
+}
+
+article .rules {
   margin: 24px 0;
 }
 
@@ -24,11 +38,22 @@ article ul li {
   margin: 4px 0;
 }
 
+mark {
+  background-color: white;
+  color: red;
+}
+
 /*------------------------------- Text styles --------------------------------*/
 
-header h1 {
+.jumbotron h1 {
   font-family: Chelsea Market, sans-serif;
   line-height: 125%;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .jumbotron h1 {
+    font-size: 48px;
+  }
 }
 
 article h2 {
@@ -36,6 +61,7 @@ article h2 {
 }
 
 article p {
+  color: #404040;
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
   font-size: 16px;
 }
@@ -45,16 +71,78 @@ footer p {
   font-size: 12px;
 }
 
+/*---------------------------------- Header ----------------------------------*/
+
+.jumbotron {
+  background-color: #FFC0FF;
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 767px) {
+  .jumbotron {
+    margin-bottom: 0;
+  }
+}
+
 /*--------------------------- Navigation and menus ---------------------------*/
 
-nav #nav-groups ul li {
+nav {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+/*------------------------------- Form inputs --------------------------------*/
+
+form {
+  margin: 24px auto 48px;
+  width: 450px;
+}
+
+.form-group {
+  margin: 16px 0;
+}
+
+.form-group > label {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+input[type="text"] {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+input[type="date"] {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+select {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+.radio-button-group {
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
+.radio-button-group > label {
+  margin-bottom: 0;
+}
+
+.radio {
+  margin-left: 25px;
+  width: 100px;
+}
+
+.radio label {
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+button {
+  width: 100px;
 }
 
 /*---------------------------------- Footer ----------------------------------*/
 
 footer {
-  margin-top: 48px;
-  padding-bottom: 12px;
-  padding-top: 12px;
+  border-top: 1px solid #808080;
+  margin-top: 24px;
+  padding-top: 16px;
 }

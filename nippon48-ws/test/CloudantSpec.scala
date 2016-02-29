@@ -7,7 +7,6 @@
 // object.
 //==============================================================================
 
-import java.util.Calendar
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
@@ -31,16 +30,10 @@ class CloudantSpec extends Specification {
 
     "add a Nippon48 member" in new WithApplication {
 
-      val calendar = Calendar.getInstance
-      calendar.set(Calendar.YEAR, 1991)
-      calendar.set(Calendar.MONTH, Calendar.JULY)
-      calendar.set(Calendar.DAY_OF_MONTH, 10)
-
-      val birthdate = calendar.getTime
       val data = Nippon48MemberData("Atsuko", "Maeda", Some("前田敦子"),
-        birthdate, "AKB48", None, Some("A"), None, "No", 1)
-      Cloudant add Nippon48Member(data)
+        "07/10/1991", "AKB48", None, Some("A"), None, "No")
 
+      Cloudant add Nippon48Member(data)
       Nippon48Member("maeda-atsuko") must beSome[Nippon48Member]
     }
 
@@ -54,11 +47,10 @@ class CloudantSpec extends Specification {
                      |  "_rev": "$revision",
                      |  "name_en": "Atsuko Maeda",
                      |  "name_jp": "前田敦子",
-                     |  "birthdate": "1991-07-10",
+                     |  "birthdate": "07/10/1991",
                      |  "groups": ["AKB48"],
                      |  "teams": ["A"],
-                     |  "captain": false,
-                     |  "generation": 1
+                     |  "captain": false
                      |}""".stripMargin
 
       member.toJSON mustEqual json
@@ -68,9 +60,8 @@ class CloudantSpec extends Specification {
 
       val member = Nippon48Member("maeda-atsuko").get
       val teams = List[String]().asJava
-      Cloudant.update("maeda-atsuko", member.groups, teams, member.isCaptain,
-        member.generation)
 
+      Cloudant.update("maeda-atsuko", member.groups, teams, member.isCaptain)
       Nippon48Member("maeda-atsuko") must beSome[Nippon48Member]
         .which(_.teams mustEqual List[String]().asJava)
     }

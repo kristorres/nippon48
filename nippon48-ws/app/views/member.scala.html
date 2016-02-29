@@ -1,0 +1,79 @@
+@******************************************************************************
+ * Generates an HTML body with a form for the user to add a Nippon48 member   *
+ * to the database.                                                           *
+ *                                                                            *
+ * @param form  the HTML form                                                 *
+ ******************************************************************************@
+
+@(form: Form[models.forms.Nippon48MemberData])
+
+@import bootstrap._
+@import models.Nippon48Member.{validGroups, validTeams}
+@import models.forms.Nippon48MemberData._
+
+@main("Add a New Member", "Add a New Member") {
+
+  <div class="rules">
+    <h2>New Nippon48 Member Rules</h2>
+    <ul>
+      <li>
+        Before adding a new Nippon48 member, check to make sure that the member
+        is not already in the database.
+      </li>
+      <li>
+        Do not add “imaginary” members (e.g.,
+        <a href="http://stage48.net/wiki/index.php/Eguchi_Aimi">Aimi Eguchi</a>)
+        or members that have already graduated (e.g.,
+        <a href="http://stage48.net/wiki/index.php/Maeda_Atsuko">Atsuko Maeda</a>).
+      </li>
+      <li>
+        The information pertaining to the new member must be accurate.
+      </li>
+    </ul>
+  </div>
+  <p>
+    Please fill out the form below to add a Nippon48 member to the database:
+  </p>
+
+  <!-- The form used to add a Nippon48 member to the database. -->
+  @helper.form(action = routes.Nippon48Controller.addMember()) {
+
+    <!-- First name text field -->
+    @text(form(FIRST_NAME_KEY), "first-name", "First name:", "Rino", true)
+
+    <!-- Last name text field -->
+    @text(form(LAST_NAME_KEY), "last-name", "Last name:", "Sashihara", true)
+
+    <!-- Japanese name text field -->
+    @text(form(NAME_JP_KEY), "name-jp", "Full name in Japanese characters:",
+      "指原莉乃", false)
+
+    <!-- Birthdate text field -->
+    @text(form(BIRTHDATE_KEY), "birthdate", "Birthdate:", "11/21/1992", true)
+
+    <!-- Primary idol girl group combobox -->
+    @combobox(form(PRIMARY_GROUP_KEY), "primary-group", "Primary group:",
+      validGroups, true)
+
+    <!-- Secondary idol girl group combobox -->
+    @combobox(form(SECONDARY_GROUP_KEY), "secondary-group", "Secondary group:",
+      validGroups, false)
+
+    <!-- Primary team combobox -->
+    @combobox(form(PRIMARY_TEAM_KEY), "primary-team", "Primary team:",
+      validTeams, false)
+
+    <!-- Secondary team combobox -->
+    @combobox(form(SECONDARY_TEAM_KEY), "secondary-team", "Secondary team:",
+      validTeams, false)
+
+    <!-- Captain status radio button group -->
+    @radio(form(CAPTAIN_STATUS_KEY), "Is the member a team captain?",
+      Seq("Yes", "No"), true)
+
+    <!-- OK button -->
+    <div align="center">
+      <button class="btn btn-default" type="submit">OK</button>
+    </div>
+  }
+}

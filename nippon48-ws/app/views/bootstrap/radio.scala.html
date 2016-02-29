@@ -1,0 +1,31 @@
+@******************************************************************************
+ * Generates a radio button group with the specified label and options. If    *
+ * `isRequired` is `true`, then a red asterisk will appear to the right of    *
+ * the label.                                                                 *
+ *                                                                            *
+ * @param field       the HTML form element                                   *
+ * @param label       the label                                               *
+ * @param options     the options                                             *
+ * @param isRequired  `true` if the input is required, or `false` otherwise   *
+ ******************************************************************************@
+@(field: Field, label: String, options: Seq[String], isRequired: Boolean)
+
+<div class="radio-button-group form-group @if(field.hasErrors) { has-error }">
+  @if(isRequired) {
+    <label>@label <mark>*</mark></label>
+  } else {
+    <label>@label</label>
+  }
+  @for(option <- options) {
+    <div class="radio">
+      <label>
+        @if(option == field.value.getOrElse("")) {
+          <input name="@field.name" type="radio" value="@option" checked/>
+        } else {
+          <input name="@field.name" type="radio" value="@option"/>
+        }
+        @option
+      </label>
+    </div>
+  }
+</div>

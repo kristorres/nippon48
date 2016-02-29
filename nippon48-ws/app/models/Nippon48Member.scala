@@ -11,7 +11,6 @@ package models
 import com.fasterxml.jackson.annotation._
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import forms.Nippon48MemberData
-import java.util.{Calendar, Date}
 import org.ektorp.support.CouchDbDocument
 import org.joda.time.{LocalDate, Years}
 import scala.collection.JavaConverters._
@@ -66,9 +65,8 @@ import services.Cloudant
  *
  * The `Nippon48Member` class is intended to behave like a JSON that can be
  * added as a document to a CouchDB database. It defines mappings for the
- * `name_en`, `name_jp`, `birthdate`, list of `groups`, list of `teams`,
- * `captain` status, and `generation`. Therefore, the JSON takes on the
- * following format:
+ * `name_en`, `name_jp`, `birthdate`, list of `groups`, list of `teams`, and
+ * `captain` status. Therefore, the JSON takes on the following format:
  *
  * {{{
  * &#123;
@@ -76,11 +74,10 @@ import services.Cloudant
  *   &quot;_rev&quot;: …,
  *   &quot;name_en&quot;: &quot;Yui Yokoyama&quot;,
  *   &quot;name_jp&quot;: &quot;横山由依&quot;,
- *   &quot;birthdate&quot;: &quot;1992-12-08&quot;,
+ *   &quot;birthdate&quot;: &quot;12/08/1992&quot;,
  *   &quot;groups&quot;: [&quot;AKB48&quot;],
  *   &quot;teams&quot;: [&quot;A&quot;],
- *   &quot;captain&quot;: true,
- *   &quot;generation&quot;: 9
+ *   &quot;captain&quot;: true
  * &#125;
  * }}}
  */
@@ -99,8 +96,8 @@ class Nippon48Member extends CouchDbDocument {
   /** The name of this Nippon48 member in Japanese characters. */
   @JsonProperty("name_jp") var nameInJapanese: String = _
 
-  /** The birthdate of this Nippon48 member as a string. */
-  @JsonProperty("birthdate") private var _birthdate: String = _
+  /** The birthdate of this Nippon48 member in the format MM/DD/YYYY. */
+  @JsonProperty("birthdate") var birthdate: String = _
 
   /** The list of idol girl groups that this Nippon48 member is currently in. */
   @JsonProperty("groups") var groups = List[String]().asJava
@@ -111,34 +108,7 @@ class Nippon48Member extends CouchDbDocument {
   /** The captain status of this Nippon48 member. */
   @JsonProperty("captain") var isCaptain = false
 
-  /**
-   * The cardinal number of the generation of this Nippon48 member in her
-   * primary team.
-   */
-  @JsonProperty("generation") var generation = 1
-
-  //================================= Mutators =================================
-
-  /**
-   * Sets the birthdate of this Nippon48 member.
-   *
-   * @param birthdate  the new birthdate
-   */
-  @JsonIgnore
-  def setBirthdate(birthdate: Date): Unit = {
-
-    val calendar = Calendar.getInstance
-    calendar setTime birthdate
-
-    val year = calendar get Calendar.YEAR
-    val month = calendar.get(Calendar.MONTH) + 1
-    val day = calendar get Calendar.DAY_OF_MONTH
-
-    val monthAsString = if (month < 10) s"0$month" else s"$month"
-    val dayAsString = if (day < 10) s"0$day" else s"$day"
-
-    _birthdate = s"$year-$monthAsString-$dayAsString"
-  }
+  //================================= Mutator ==================================
 
   /**
    * Sets the given name and family name (surname) of this Nippon48 member.
@@ -161,26 +131,17 @@ class Nippon48Member extends CouchDbDocument {
   @JsonIgnore
   def age: Int = {
 
-    val dashIndex1 = _birthdate indexOf '-'
-    val dashIndex2 = _birthdate lastIndexOf '-'
+    val dashIndex1 = this.birthdate indexOf '/'
+    val dashIndex2 = this.birthdate lastIndexOf '/'
 
-    val year = _birthdate.substring(0, dashIndex1).toInt
-    val month = _birthdate.substring(dashIndex1 + 1, dashIndex2).toInt
-    val day = _birthdate.substring(dashIndex2 + 1).toInt
+    val year = this.birthdate.substring(dashIndex2 + 1).toInt
+    val month = this.birthdate.substring(0, dashIndex1).toInt
+    val day = this.birthdate.substring(dashIndex1 + 1, dashIndex2).toInt
 
     val today = new LocalDate
     val birthdate = new LocalDate(year, month, day)
     Years.yearsBetween(birthdate, today).getYears
   }
-
-  /**
-   * Gets the birthdate of this Nippon48 member as a string in the format
-   * `"YYYY-MM-DD"`.
-   *
-   * @return the birthdate as a string
-   */
-  @JsonIgnore
-  def birthdate: String = _birthdate
 
   /**
    * Gets the “romanized” version of the name of this Nippon48 member in the
@@ -215,8 +176,7 @@ class Nippon48Member extends CouchDbDocument {
         |  "birthdate": "$birthdate",
         |  "groups": $groups,
         |  "teams": $teams,
-        |  "captain": $isCaptain,
-        |  "generation": $generation
+        |  "captain": $isCaptain
         |}""".stripMargin
   }
 
@@ -251,10 +211,10 @@ class Nippon48Member extends CouchDbDocument {
 object Nippon48Member {
 
   /** The minimum age requirement for a Nippon48 member. */
-  val minAge = 12
+  final val MIN_AGE = 12
 
   /** The maximum age requirement for a Nippon48 member. */
-  val maxAge = 30
+  final val MAX_AGE = 30
 
   /** All the Japanese idol girl groups that are produced by Yasushi Akimoto. */
   val validGroups = Seq("AKB48", "SKE48", "NMB48", "HKT48", "NGT48",
@@ -299,41 +259,37 @@ object Nippon48Member {
       teams = teams :+ data.secondaryTeam.get
 
     Nippon48Member(data.firstName, data.lastName, data.nameInJapanese.orNull,
-      data.birthdate, groups.asJava, teams.asJava, data.isCaptain == "Yes",
-      data.generation)
+      data.birthdate, groups.asJava, teams.asJava, data.isCaptain == "Yes")
   }
 
   /**
    * Creates a Nippon48 member with the specified given name, family name
    * (surname), name in Japanese characters, birthdate, idol girl groups, teams,
-   * captain status, and generation number in her primary team.
+   * and captain status.
    *
    * @param firstName       the given name
    * @param lastName        the family name
    * @param nameInJapanese  the name in Japanese characters
-   * @param birthdate       the birthdate
+   * @param birthdate       the birthdate in the format MM/DD/YYYY
    * @param groups          the groups
    * @param teams           the teams
    * @param isCaptain       `true` if the Nippon48 member is a captain, or
    *                        `false` otherwise
-   * @param generation      the generation number
    *
    * @return the Nippon48 member
    */
   def apply(firstName: String, lastName: String, nameInJapanese: String,
-    birthdate: Date, groups: java.util.List[String],
-    teams: java.util.List[String], isCaptain: Boolean,
-    generation: Int): Nippon48Member = {
+    birthdate: String, groups: java.util.List[String],
+    teams: java.util.List[String], isCaptain: Boolean): Nippon48Member = {
 
     val member = new Nippon48Member
     member setId s"${lastName.toLowerCase}-${firstName.toLowerCase}"
     member.setName(firstName, lastName)
     member.nameInJapanese = nameInJapanese
-    member setBirthdate birthdate
+    member.birthdate = birthdate
     member.groups = groups
     member.teams = teams
     member.isCaptain = isCaptain
-    member.generation = generation
     member
   }
 }

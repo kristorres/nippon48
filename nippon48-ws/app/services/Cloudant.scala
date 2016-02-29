@@ -59,6 +59,7 @@ object Cloudant {
   def add(member: Nippon48Member): Unit = {
     if (database.isEmpty) connectToDatabase()
     database.get create member
+    Logger debug s"Added Nippon48 member ${member.name} to Cloudant."
   }
 
   /**
@@ -85,26 +86,26 @@ object Cloudant {
   def remove(id: String): Unit = {
     if (database.isEmpty) connectToDatabase()
     fetch(id) match {
-      case Some(member) => database.get delete member
+      case Some(member) =>
+        database.get delete member
+        Logger debug s"Removed Nippon48 member ${member.name} from Cloudant."
       case None =>
     }
   }
 
   /**
-   * Updates the idol girl groups, teams, captain status, and generation number
-   * of the Nippon48 member associated with the specified ID. This method does
-   * nothing if there is no such member in the Cloudant database.
+   * Updates the idol girl groups, teams, and captain status of the Nippon48
+   * member associated with the specified ID. This method does nothing if there
+   * is no such member in the Cloudant database.
    *
    * @param id          the ID of the Nippon48 member to be updated
    * @param groups      the new groups
    * @param teams       the new teams
    * @param isCaptain   `true` if the Nippon48 member is a captain, or `false`
    *                    otherwise
-   * @param generation  the new generation number
    */
   def update(id: String, groups: java.util.List[String],
-    teams: java.util.List[String], isCaptain: Boolean,
-    generation: Int): Unit = {
+    teams: java.util.List[String], isCaptain: Boolean): Unit = {
 
     if (database.isEmpty) connectToDatabase()
 
@@ -113,8 +114,8 @@ object Cloudant {
         member.groups = groups
         member.teams = teams
         member.isCaptain = isCaptain
-        member.generation = generation
         database.get update member
+        Logger debug s"Updated Nippon48 member ${member.name}."
       case None =>
     }
   }
@@ -227,13 +228,15 @@ object Cloudant {
    * Nippon48 members in the Cloudant database.
    */
   private object CouchDBViewRunnable extends Runnable {
+
     override def run(): Unit = {
+
       try {
         getMembers
       } catch {
         case _: NoSuchElementException =>
-          Logger error "Unable to validate CouchDB view"
-          Logger error "Attempting to reconnect to Cloudant"
+          Logger error "Unable to validate CouchDB view."
+          Logger error "Attempting to reconnect to Cloudant..."
           connectToDatabase()
       }
     }
