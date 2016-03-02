@@ -10,7 +10,6 @@ package controllers
 
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
-import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json._
@@ -56,7 +55,7 @@ object Nippon48Controller extends Controller {
    *
    * @return the GET action
    */
-  def newMember = Action { Ok(views.html.member(form)) }
+  def newMember = Action { Ok(views.html.member(form, None)) }
 
   //========================== RESTful API endpoints ===========================
 
@@ -72,23 +71,26 @@ object Nippon48Controller extends Controller {
     val input = form.bindFromRequest
 
     input.fold(
-      formWithErrors => BadRequest(views.html.member(formWithErrors)),
+      formWithErrors => BadRequest(views.html.member(formWithErrors, None)),
       value => {
 
-        val badRequest = BadRequest(views.html.member(input))
         val minAge = Nippon48Member.MIN_AGE
         val maxAge = Nippon48Member.MAX_AGE
         val member = Nippon48Member(value)
         val age = member.age
 
         if (age < minAge || age > maxAge) {
-          Logger.error(s"Age must be between $minAge and $maxAge, " +
-            s"inclusively (invalid age: $age)")
-          badRequest
+          val error = "Nippon48 members must currently be between " +
+            s"$minAge and $maxAge, inclusively. " +
+            s"(${member.name} is currently $age.)"
+          BadRequest(views.html.member(input, Some(error)))
         } else if (value.secondaryTeam.isDefined && value.primaryTeam.isEmpty) {
-          Logger.error(s"Secondary team ${value.secondaryTeam.get} " +
-            "is selected, but primary team is not selected")
-          badRequest
+          val error = s"The secondary team ${value.secondaryTeam.get} " +
+            "is selected, but the primary team is not selected."
+          BadRequest(views.html.member(input, Some(error)))
+        } else if (Nippon48Member(member.getId).isDefined) {
+          val error = s"${member.name} is already in the database."
+          BadRequest(views.html.member(input, Some(error)))
         } else {
           Cloudant add member
           Redirect(routes.Nippon48Controller.index)

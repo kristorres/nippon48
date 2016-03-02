@@ -2,10 +2,12 @@
  * Generates an HTML body with a form for the user to add a Nippon48 member   *
  * to the database.                                                           *
  *                                                                            *
- * @param form  the HTML form                                                 *
+ * @param form   the HTML form                                                *
+ * @param error  an ''optional'' that contains the error message, or `None`   *
+ *               otherwise                                                    *
  ******************************************************************************@
 
-@(form: Form[models.forms.Nippon48MemberData])
+@(form: Form[models.forms.Nippon48MemberData], error: Option[String])
 
 @import bootstrap._
 @import models.Nippon48Member.{validGroups, validTeams}
@@ -34,6 +36,11 @@
   <p>
     Please fill out the form below to add a Nippon48 member to the database:
   </p>
+
+  <!-- Any error that is not associated to an HTML form element goes here. -->
+  @if(error.isDefined) {
+    <div id="error" class="text-center"><span>@error.get</span></div>
+  }
 
   <!-- The form used to add a Nippon48 member to the database. -->
   @helper.form(action = routes.Nippon48Controller.addMember()) {

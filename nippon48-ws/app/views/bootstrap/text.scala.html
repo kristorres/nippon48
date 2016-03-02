@@ -24,4 +24,7 @@
          type="text"
          placeholder="@placeholder"
          value="@field.value.getOrElse("")"/>
+  @if(field.hasErrors) {
+    <span class="help-block">This field is required.</span>
+  }
 </div>

@@ -28,4 +28,7 @@
       }
     }
   </select>
+  @if(field.hasErrors) {
+    <span class="help-block">This field is required.</span>
+  }
 </div>

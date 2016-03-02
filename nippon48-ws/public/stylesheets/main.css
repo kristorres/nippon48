@@ -38,6 +38,16 @@ article ul li {
   margin: 4px 0;
 }
 
+article #error {
+  border: 1px solid #A94442;
+  border-radius: 4px;
+  color: #A94442;
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  margin: 48px auto;
+  padding: 2px;
+  width: 700px;
+}
+
 mark {
   background-color: white;
   color: red;
@@ -105,16 +115,20 @@ form {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
-input[type="text"] {
+.form-group > span {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
-input[type="date"] {
+input[type="text"] {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
 select {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+.has-error > input[type="text"] {
+  background-color: #FFF0F0;
 }
 
 .radio-button-group {
@@ -132,6 +146,7 @@ select {
 }
 
 .radio label {
+  color: black;
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
