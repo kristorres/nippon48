@@ -76,6 +76,10 @@ object Nippon48Controller extends Controller {
 
         val minAge = Nippon48Member.MIN_AGE
         val maxAge = Nippon48Member.MAX_AGE
+        val group1 = value.primaryGroup
+        val group2 = value.secondaryGroup
+        val team1 = value.primaryTeam
+        val team2 = value.secondaryTeam
         val member = Nippon48Member(value)
         val age = member.age
 
@@ -84,9 +88,16 @@ object Nippon48Controller extends Controller {
             s"$minAge and $maxAge, inclusively. " +
             s"(${member.name} is currently $age.)"
           BadRequest(views.html.member(input, Some(error)))
-        } else if (value.secondaryTeam.isDefined && value.primaryTeam.isEmpty) {
+        } else if (group2.isDefined && group1 == group2.get) {
+          val error = "The primary and secondary idol girl groups " +
+            "cannot be the same."
+          BadRequest(views.html.member(input, Some(error)))
+        } else if (team2.isDefined && team1.isEmpty) {
           val error = s"The secondary team ${value.secondaryTeam.get} " +
             "is selected, but the primary team is not selected."
+          BadRequest(views.html.member(input, Some(error)))
+        } else if (team2.isDefined && team1.get == team2.get) {
+          val error = s"The primary and secondary teams cannot be the same."
           BadRequest(views.html.member(input, Some(error)))
         } else if (Nippon48Member(member.getId).isDefined) {
           val error = s"${member.name} is already in the database."
