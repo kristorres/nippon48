@@ -1,12 +1,13 @@
 //==============================================================================
-// FILE:   nippon48-ws/test/MemberSpec.scala
+// FILE:   nippon48-ws/test/models/Nippon48MemberSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/02/01
 //
 // This file includes all the unit tests for the `Nippon48Member` model class.
 //==============================================================================
 
-import models.Nippon48Member
+package models
+
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
 
@@ -17,10 +18,10 @@ import org.specs2.mutable.Specification
  * this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only MemberSpec"
+ * sbt "project nippon48-ws" "test-only models.Nippon48MemberSpec"
  * }}}
  */
-class MemberSpec extends Specification {
+class Nippon48MemberSpec extends Specification {
 
   "Nippon48" should {
 

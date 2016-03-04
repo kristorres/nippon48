@@ -1,5 +1,5 @@
 //==============================================================================
-// FILE:   nippon48-ws/test/CloudantSpec.scala
+// FILE:   nippon48-ws/test/services/CloudantSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/02/01
 //
@@ -7,12 +7,13 @@
 // object.
 //==============================================================================
 
+package services
+
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
 import play.api.test.WithApplication
 import scala.collection.JavaConverters._
-import services.Cloudant
 
 /**
  * The unit specification class for the [[services.Cloudant]] singleton object.
@@ -21,7 +22,7 @@ import services.Cloudant
  * root directory of this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only CloudantSpec"
+ * sbt "project nippon48-ws" "test-only services.CloudantSpec"
  * }}}
  */
 class CloudantSpec extends Specification {

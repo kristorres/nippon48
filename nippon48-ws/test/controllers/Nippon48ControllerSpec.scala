@@ -1,10 +1,12 @@
 //==============================================================================
-// FILE:   nippon48-ws/test/ApplicationSpec.scala
+// FILE:   nippon48-ws/test/controllers/Nippon48ControllerSpec.scala
 // AUTHOR: Kris Torres
 // DATE:   2016/01/30
 //
 // This file includes all the unit tests for the Nippon48 application.
 //==============================================================================
+
+package controllers
 
 import org.specs2.mutable.Specification
 import play.api.test.{FakeRequest, WithApplication}
@@ -17,10 +19,10 @@ import play.api.test.Helpers._
  * the following command in the root directory of this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only ApplicationSpec"
+ * sbt "project nippon48-ws" "test-only controllers.Nippon48ControllerSpec"
  * }}}
  */
-class ApplicationSpec extends Specification {
+class Nippon48ControllerSpec extends Specification {
 
   "Nippon48" should {
 
