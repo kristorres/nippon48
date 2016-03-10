@@ -66,13 +66,43 @@
     her groups), then click on the <i>Delete</i> link in the respective table
     row to delete her from the database.
   </p>
-  <p>
-    @defining(services.Cloudant.getMembers.size) { numberOfMembers =>
-      @if(numberOfMembers == 1) {
-        There is currently 1 member in the database.
-      } else {
-        There are currently @numberOfMembers members in the database.
-      }
+  <p id="census-statement"></p>
+
+  <!-- Table of Nippon48 members and their stats -->
+  <table class="table">
+    <colgroup>
+      <col class="col-xs-5"/>
+      <col class="col-xs-4"/>
+      <col class="col-xs-1"/>
+      <col class="col-xs-1"/>
+      <col class="col-xs-1"/>
+    </colgroup>
+    <tr class="active">
+      <th class="text-center">Name</th>
+      <th class="text-center">Birthdate (age)</th>
+      <th class="text-center">Group(s)</th>
+      <th class="text-center">Team(s)</th>
+      <th></th>
+    </tr>
+    @for(member <- services.Cloudant.getMembers) {
+      <tr>
+        <td>
+          <a href="@member.wikiURL">@member.name</a> (@member.nameInJapanese)
+          @if(member.isCaptain) { <b>(C)</b> }
+        </td>
+        <td>@member.fullBirthdate (age @member.age)</td>
+        <td class="text-center">@member.groups.mkString("/")</td>
+        <td class="text-center">
+          @if(!member.teams.isEmpty) {
+            @member.teams.mkString("/")
+          } else {
+            —
+          }
+        </td>
+        <td class="text-center">
+          <a class="btn btn-danger" data-id="@member.getId">Delete</a>
+        </td>
+      </tr>
     }
-  </p>
+  </table>
 }

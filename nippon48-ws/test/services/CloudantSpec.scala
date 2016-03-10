@@ -55,6 +55,7 @@ class CloudantSpec extends Specification {
                      |}""".stripMargin
 
       member.toJSON mustEqual json
+      member.fullBirthdate mustEqual "July 10, 1991"
     }
 
     "update a Nippon48 member" in new WithApplication {

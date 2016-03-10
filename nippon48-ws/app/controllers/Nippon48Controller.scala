@@ -119,6 +119,16 @@ object Nippon48Controller extends Controller {
     Ok(Json.toJson(Cloudant.getMembers)(Nippon48MemberWriterList))
   }
 
+  /**
+   * Removes the Nippon48 member associated with the specified ID from the
+   * database.
+   *
+   * @param id  the ID of the Nippon48 member to be removed
+   *
+   * @return the DELETE action
+   */
+  def removeMember(id: String) = Action { Cloudant remove id; Ok }
+
   //=========================== Private JSON writers ===========================
 
   /** The inner singleton object that writes a Nippon48 member as a JSON. */

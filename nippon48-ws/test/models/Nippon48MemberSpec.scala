@@ -44,6 +44,7 @@ class Nippon48MemberSpec extends Specification {
                     |}""".stripMargin
 
       member.toJSON mustEqual json
+      member.fullBirthdate mustEqual "December 8, 1992"
     }
 
     "create an NMB48/AKB48 member named Sayaka Yamamoto" in {
@@ -65,6 +66,7 @@ class Nippon48MemberSpec extends Specification {
                     |}""".stripMargin
 
       member.toJSON mustEqual json
+      member.fullBirthdate mustEqual "July 14, 1993"
     }
 
     "create a Nogizaka46 member named Rina Ikoma" in {
@@ -86,6 +88,7 @@ class Nippon48MemberSpec extends Specification {
                     |}""".stripMargin
 
       member.toJSON mustEqual json
+      member.fullBirthdate mustEqual "December 29, 1995"
     }
   }
 }

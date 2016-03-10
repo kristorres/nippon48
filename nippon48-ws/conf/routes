@@ -8,14 +8,15 @@
 
 # Pages
 # ~~~~~
-GET   /              controllers.Nippon48Controller.index
-GET   /add-member    controllers.Nippon48Controller.newMember
+GET     /              controllers.Nippon48Controller.index
+GET     /add-member    controllers.Nippon48Controller.newMember
 
 # RESTful API endpoints
 # ~~~~~~~~~~~~~~~~~~~~~
-POST  /member        controllers.Nippon48Controller.addMember
-GET   /members       controllers.Nippon48Controller.getMembers
+POST    /member        controllers.Nippon48Controller.addMember
+DELETE  /members/:id   controllers.Nippon48Controller.removeMember(id: String)
+GET     /members       controllers.Nippon48Controller.getMembers
 
 # Map static resources from the /public folder to the /assets URL path
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-GET   /assets/*file  controllers.Assets.at(path: String = "/public", file: String)
+GET     /assets/*file  controllers.Assets.at(path: String = "/public", file: String)

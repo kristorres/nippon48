@@ -71,7 +71,6 @@ article h2 {
 }
 
 article p {
-  color: #404040;
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
   font-size: 16px;
 }
@@ -98,6 +97,32 @@ footer p {
 
 nav {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+}
+
+/*---------------------------------- Tables ----------------------------------*/
+
+.table {
+  margin: 48px auto;
+}
+
+.table > tbody > tr > th {
+  border: 1px solid #404040;
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  vertical-align: middle;
+}
+
+.table > tbody > tr > td {
+  border: 1px solid #404040;
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  vertical-align: middle;
+}
+
+.table > tbody > tr:hover > td {
+  background-color: #FFFFF0;
+}
+
+.btn-danger {
+  width: 75px;
 }
 
 /*------------------------------- Form inputs --------------------------------*/
@@ -150,7 +175,7 @@ select {
   font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
-button {
+.btn-default {
   width: 100px;
 }
 

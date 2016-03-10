@@ -11,6 +11,8 @@ package models
 import com.fasterxml.jackson.annotation._
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import forms.Nippon48MemberData
+import java.text.SimpleDateFormat
+import java.util.Locale
 import org.ektorp.support.CouchDbDocument
 import org.joda.time.{LocalDate, Years}
 import scala.collection.JavaConverters._
@@ -141,6 +143,18 @@ class Nippon48Member extends CouchDbDocument {
     val today = new LocalDate
     val birthdate = new LocalDate(year, month, day)
     Years.yearsBetween(birthdate, today).getYears
+  }
+
+  /**
+   * Gets the birthdate of this Nippon48 member in the format
+   * `"&lt;MONTH&gt; &lt;DAY&gt;, &lt;YEAR&gt;"`.
+   *
+   * @return the birthdate
+   */
+  @JsonIgnore
+  def fullBirthdate: String = {
+    val date = new SimpleDateFormat("MM/dd/yyyy") parse birthdate
+    new SimpleDateFormat("MMMM d, yyyy", Locale.US) format date
   }
 
   /**

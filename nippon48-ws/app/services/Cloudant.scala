@@ -154,6 +154,7 @@ object Cloudant {
    *         to the database
    */
   def getMembers: List[Nippon48Member] = {
+    if (database.isEmpty) connectToDatabase()
     val result = database.get.queryView(query viewName "all")
     result.getRows.asScala.toList.map(row => fetch(row.getId).get)
   }

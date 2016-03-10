@@ -6,7 +6,25 @@
 // This file includes all the Javascript functions for the Nippon48 application.
 //==============================================================================
 
-//================================== Function ==================================
+//================================= Functions ==================================
+
+/**
+ * Sets the census statement, which reports the number of Nippon48 members in
+ * the database. This function also hides the table of Nippon48 members and
+ * their stats if there are currently no members in the database.
+ */
+function setCensusStatement() {
+
+  var census = $("#census-statement");
+  var count = $(".table tr").length - 1;
+
+  if (count == 0)
+    $(".table").hide();
+  else if (count == 1)
+    census.text("There is currently 1 member in the database.");
+  else
+    census.text("There are currently " + count + " members in the database.");
+}
 
 /**
  * Sets the datepicker for the birthdate text field in the form that is used to
@@ -39,6 +57,21 @@ function setDatePicker() {
 //================================ Main driver =================================
 
 $(document).ready(function() {
+
   console.log("Welcome to Nippon48!");
+  setCensusStatement();
   setDatePicker();
+
+  // Removes the table row that contains the Nippon48 member.
+  $(".btn-danger").click(function() {
+    var $button = $(this);
+    var id = $button.data("id");
+    $.ajax({
+      url: "/members/" + id,
+      type: "DELETE"
+    }).done(function() {
+      $button.closest("tr").remove();
+      setCensusStatement();
+    });
+  });
 });
