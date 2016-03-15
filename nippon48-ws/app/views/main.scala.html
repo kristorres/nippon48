@@ -80,7 +80,11 @@
               </a>
               <ul class="dropdown-menu">
                 @for(group <- Nippon48Member.validGroups) {
-                  <li><a>@group</a></li>
+                  <li>
+                    <a href="@routes.Nippon48Controller.getGroup(group)">
+                      @group
+                    </a>
+                  </li>
                 }
               </ul>
             </li>

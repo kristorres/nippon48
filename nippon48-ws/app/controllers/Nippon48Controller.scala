@@ -111,12 +111,33 @@ object Nippon48Controller extends Controller {
   }
 
   /**
+   * Renders the page of this application that lists all the Nippon48 members of
+   * the specified idol girl group and their stats in a table. '''Note that the
+   * supplied argument in this method is __case-sensitive__.'''
+   *
+   * @param name  the group (`"all"` to list ''all'' the members in the
+   *              database)
+   *
+   * @return the GET action
+   */
+  def getGroup(name: String) = Action {
+    if (name equalsIgnoreCase "all")
+      Redirect(routes.Nippon48Controller.index)
+    else {
+      Nippon48Member.validGroups.find(_ equalsIgnoreCase name) match {
+        case Some(group) => Ok(views.html.group(group))
+        case None => NotFound(views.html.error(name))
+      }
+    }
+  }
+
+  /**
    * Lists all the Nippon48 members in the database in JSON format.
    *
    * @return the GET action
    */
   def getMembers = Action {
-    Ok(Json.toJson(Cloudant.getMembers)(Nippon48MemberWriterList))
+    Ok(Json.toJson(Cloudant getMembers None)(Nippon48MemberWriterList))
   }
 
   /**

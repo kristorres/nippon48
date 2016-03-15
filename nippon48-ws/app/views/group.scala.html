@@ -1,0 +1,133 @@
+@******************************************************************************
+ * Generates an HTML body that lists all the Nippon48 members of the          *
+ * specified idol girl group and their stats in a table.                      *
+ *                                                                            *
+ * @param group  the group                                                    *
+ ******************************************************************************@
+@(group: String)
+
+@main(group, group) {
+
+  @defining(s"images/groups/$group.jpg") { filename =>
+    <img class="img-responsive" src="@routes.Assets.at(filename)"/>
+  }
+
+  <h2>What Is @group?</h2>
+
+  @if(group == "AKB48") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2005 and based
+      in Akihabara, Tokyo, where they have their own theater on the eighth floor
+      of the Don Quixote building. The group is produced by Yasushi Akimoto and
+      signed under King Records. The group consists of five teams:
+      <i>Team A</i>, <i>Team K</i>, <i>Team B</i>, <i>Team 4</i>, and
+      <i>Team 8</i>. They currently hold the record for highest overall single
+      sales for a girl group on the Oricon charts and also hold the Guinness
+      World Record for the world’s “largest pop group.”
+    </p>
+    <div class="rules">
+      <h3>Sub-Units</h3>
+      <ul>
+        <li>
+          <a href="http://stage48.net/wiki/index.php/No_Sleeves">No Sleeves</a>
+          (a.k.a., <i>no3b</i> and <i>Persona</i>) (2008–)
+        </li>
+        <li>
+          <a href="http://stage48.net/wiki/index.php/Watarirouka_Hashiritai_7">
+            Watarirouka Hashiritai 7
+          </a>
+          (2009–2013)
+        </li>
+        <li>
+          <a href="http://stage48.net/wiki/index.php/French_Kiss">
+            French Kiss
+          </a>
+          (2010–2015)
+        </li>
+        <li>
+          <a href="http://stage48.net/wiki/index.php/Not_yet">Not Yet</a>
+          (2011–)
+        </li>
+        <li>
+          <a href="http://stage48.net/wiki/index.php/DIVA_(Sub-Unit)">DIVA</a>
+          (2011–2014)
+        </li>
+      </ul>
+    </div>
+  }
+
+  @if(group == "SKE48") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2008 and based
+      in Sakae, Nagoya, where they have their own theater in Sunshine Sakae.
+      They are the first sister group of AKB48. The group is produced by Yasushi
+      Akimoto and signed under Avex Trax. The group consists of three teams:
+      <i>Team S</i>, <i>Team KII</i>, and <i>Team E</i>. The group also has a
+      sub-unit named
+      <a href="http://stage48.net/wiki/index.php/Love_Crescendo">Love Crescendo</a>,
+      which was established in 2015.
+    </p>
+  }
+
+  @if(group == "NMB48") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2010 and based
+      in Namba, Osaka, where they have their own theater in the Yes-Namba
+      Building. They are the second sister group of AKB48. The group is produced
+      by Yasushi Akimoto, managed by Yoshimoto Kogyo Co., Ltd., and signed under
+      Laugh Out Loud Records. The group consists of three teams: <i>Team N</i>,
+      <i>Team M</i>, and <i>Team BII</i>.
+    </p>
+  }
+
+  @if(group == "HKT48") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2011 and based
+      in Hakata, Fukuoka, where they have their own theater in Hawks Town Mall.
+      They are the third sister group of AKB48. The group is produced by Yasushi
+      Akimoto and signed under Universal Music Japan. The group consists of two
+      teams: <i>Team H</i> and <i>Team KIV</i>.
+    </p>
+  }
+
+  @if(group == "NGT48") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2015 and based
+      in Niigata, where they have their own theater in the Lovela 2 building.
+      They are the fourth sister group of AKB48. The group is produced by
+      Yasushi Akimoto. The group consists of one team: <i>Team NIII</i>.
+    </p>
+  }
+
+  @if(group == "Nogizaka46") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2010 and based
+      in Tokyo. The group is named after the SME Nogizaka Building, which houses
+      Sony Music Japan’s office. They are the first rival group of AKB48. The
+      group is produced by Yasushi Akimoto and signed under Sony Music
+      Entertainment Japan. Unlike AKB48 and its sister groups, the members are
+      divided by generation instead of teams:
+      <a href="http://stage48.net/wiki/index.php/Nogizaka46_1st_Generation">1<sup>st</sup> Generation</a> and
+      <a href="http://stage48.net/wiki/index.php/Nogizaka46_2nd_Generation">2<sup>nd</sup> Generation</a>.
+    </p>
+  }
+
+  @if(group == "Keyakizaka46") {
+    <p>
+      <b>@group</b> is a Japanese idol girl group established in 2015 and based
+      in Tokyo. They were initially known as <i>Toriizaka46</i> until their
+      debut, when the name was changed. They are the sole sister group of
+      Nogizaka46 and second rival group of AKB48. The group is produced by
+      Yasushi Akimoto and signed uner Sony Music Entertainment Japan. There are
+      currently only
+      <a href="http://stage48.net/wiki/index.php/Keyakizaka46_1st_Generation">1<sup>st</sup> Generation</a>
+      members in the group. The group will also have a sub-group named
+      <a href="http://stage48.net/wiki/index.php/Kana_Keyakizaka46">Kana Keyakizaka46</a>.
+    </p>
+  }
+
+  <p id="census-statement"></p>
+
+  <!-- Table of Nippon48 members and their stats -->
+  @table(Some(group))
+}

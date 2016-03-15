@@ -16,8 +16,7 @@ body {
 
 article {
   background-color: white;
-  padding-bottom: 16px;
-  padding-top: 16px;
+  padding: 16px 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -53,6 +52,10 @@ mark {
   color: red;
 }
 
+img {
+  margin: 24px auto;
+}
+
 /*------------------------------- Text styles --------------------------------*/
 
 .jumbotron h1 {
@@ -68,6 +71,10 @@ mark {
 
 article h2 {
   font: 24px Gill Sans;
+}
+
+article h3 {
+  font: 22px Gill Sans;
 }
 
 article p {
@@ -157,8 +164,7 @@ select {
 }
 
 .radio-button-group {
-  margin-bottom: 24px;
-  margin-top: 24px;
+  margin: 24px 0;
 }
 
 .radio-button-group > label {

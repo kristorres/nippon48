@@ -146,17 +146,23 @@ object Cloudant {
   }
 
   /**
-   * Accesses all the Nippon48 members in the Cloudant database.
+   * Accesses all the Nippon48 members of the specified idol girl group in the
+   * Cloudant database.
+   *
+   * @param group  an ''optional'' that contains the group, or `None` to query
+   *               all the members in the database
    *
    * @return the list of Nippon48 members
    *
    * @throws java.util.NoSuchElementException if there is no active connection
    *         to the database
    */
-  def getMembers: List[Nippon48Member] = {
+  def getMembers(group: Option[String]): List[Nippon48Member] = {
     if (database.isEmpty) connectToDatabase()
     val result = database.get.queryView(query viewName "all")
-    result.getRows.asScala.toList.map(row => fetch(row.getId).get)
+    var members = result.getRows.asScala.toList.map(row => fetch(row.getId).get)
+    if (group.isDefined) members = members.filter(_.groups.contains(group.get))
+    members
   }
 
   //============================= Private methods ==============================
@@ -233,7 +239,7 @@ object Cloudant {
     override def run(): Unit = {
 
       try {
-        getMembers
+        getMembers(None)
       } catch {
         case _: NoSuchElementException =>
           Logger error "Unable to validate CouchDB view."

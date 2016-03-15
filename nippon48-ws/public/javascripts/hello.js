@@ -17,13 +17,20 @@ function setCensusStatement() {
 
   var census = $("#census-statement");
   var count = $(".table tr").length - 1;
+  var header = $(".jumbotron .container").text();
+  var allMembers = header == "Welcome to Nippon48!";
 
-  if (count == 0)
+  if (count == 0) {
     $(".table").hide();
-  else if (count == 1)
-    census.text("There is currently 1 member in the database.");
-  else
-    census.text("There are currently " + count + " members in the database.");
+    census.text("There are currently no members in the database"
+      + (allMembers ? "." : " that belong to " + header + "."));
+  } else if (count == 1) {
+    census.text("There is currently 1 member in the database"
+      + (allMembers ? "." : " that belongs to " + header + "."));
+  } else {
+    census.text("There are currently " + count + " members in the database"
+      + (allMembers ? "." : " that belong to " + header + "."));
+  }
 }
 
 /**

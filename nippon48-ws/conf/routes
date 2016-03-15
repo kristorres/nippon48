@@ -9,6 +9,7 @@
 # Pages
 # ~~~~~
 GET     /              controllers.Nippon48Controller.index
+GET     /groups/:name  controllers.Nippon48Controller.getGroup(name: String)
 GET     /add-member    controllers.Nippon48Controller.newMember
 
 # RESTful API endpoints
