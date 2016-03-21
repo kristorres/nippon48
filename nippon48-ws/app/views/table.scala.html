@@ -25,7 +25,8 @@
   @for(member <- services.Cloudant.getMembers(group)) {
     <tr>
       <td>
-        <a href="@member.wikiURL">@member.name</a> (@member.nameInJapanese)
+        <a href="@member.wikiURL">@member.name</a>
+        @if(member.nameInJapanese != null) { (@member.nameInJapanese) }
         @if(member.isCaptain) { <b>(C)</b> }
       </td>
       <td>@member.fullBirthdate (age @member.age)</td>

@@ -90,7 +90,6 @@ footer p {
 /*---------------------------------- Header ----------------------------------*/
 
 .jumbotron {
-  background-color: #FFC0FF;
   margin-bottom: 48px;
 }
 
@@ -183,6 +182,13 @@ select {
 
 .btn-default {
   width: 100px;
+}
+
+/*------------------------------- Date picker --------------------------------*/
+
+.ui-datepicker {
+  border: 1px solid #C0C0C0;
+  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
 }
 
 /*---------------------------------- Footer ----------------------------------*/

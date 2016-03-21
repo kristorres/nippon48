@@ -25,6 +25,12 @@
          placeholder="@placeholder"
          value="@field.value.getOrElse("")"/>
   @if(field.hasErrors) {
-    <span class="help-block">This field is required.</span>
+    <span class="help-block">
+      @if(id == "birthdate") {
+        This field must contain a valid date in the format MM/DD/YYYY.
+      } else {
+        This field is required.
+      }
+    </span>
   }
 </div>

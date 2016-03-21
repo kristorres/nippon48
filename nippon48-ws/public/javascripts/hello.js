@@ -34,7 +34,7 @@ function setCensusStatement() {
 }
 
 /**
- * Sets the datepicker for the birthdate text field in the form that is used to
+ * Sets the date picker for the birthdate text field in the form that is used to
  * add a Nippon48 member to the database. The minimum date is set to 30 years
  * before today’s date, while the maximum date is set to 12 years before today’s
  * date.
@@ -61,6 +61,18 @@ function setDatePicker() {
   });
 }
 
+/**
+ * Sets the background and foreground colors of the jumbotron.
+ *
+ * @param {String} background  the background color
+ * @param {String} foreground  the foreground color
+ */
+function setJumbotronColors(background, foreground) {
+  var jumbotron = $(".jumbotron");
+  jumbotron.css("background-color", background);
+  jumbotron.css("color", foreground);
+}
+
 //================================ Main driver =================================
 
 $(document).ready(function() {
@@ -68,6 +80,17 @@ $(document).ready(function() {
   console.log("Welcome to Nippon48!");
   setCensusStatement();
   setDatePicker();
+
+  switch ($(".jumbotron .container").text()) {
+    case "AKB48": setJumbotronColors("#EE92B0", "white"); break;
+    case "SKE48": setJumbotronColors("#EDA72B", "white"); break;
+    case "NMB48": setJumbotronColors("#F48700", "white"); break;
+    case "HKT48": setJumbotronColors("black", "white"); break;
+    case "NGT48": setJumbotronColors("white", "red"); break;
+    case "Nogizaka46": setJumbotronColors("#7E0E85", "white"); break;
+    case "Keyakizaka46": setJumbotronColors("#1AB631", "white"); break;
+    default: setJumbotronColors("#FFC0FF", "black");
+  }
 
   // Removes the table row that contains the Nippon48 member.
   $(".btn-danger").click(function() {
