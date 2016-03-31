@@ -35,8 +35,8 @@ import services.Cloudant
  *     Team N, Team M, and Team BII.
  *   </li>
  *   <li>
- *     ''HKT48'' (est. 2011 from Hakata, Fukuoka) consists of two teams:
- *     Team H and Team KIV.
+ *     ''HKT48'' (est. 2011 from Hakata, Fukuoka) consists of three teams:
+ *     Team H, Team KIV, and Team TII.
  *   </li>
  *   <li>
  *     ''NGT48'' (est. 2015 from Niigata) consists of one team: Team NIII.
@@ -239,7 +239,8 @@ object Nippon48Member {
    * Akimoto.
    */
   val validTeams = Seq("A", "K", "B", "4", "8", "S", "KII", "E", "N", "M",
-    "BII", "H", "KIV", "NIII", "Theater Manager", "Unknown", "Kenkyuusei")
+    "BII", "H", "KIV", "TII", "NIII", "Theater Manager", "Unknown",
+    "Kenkyuusei")
 
   /**
    * Fetches the Nippon48 member associated with the specified ID. (This method
