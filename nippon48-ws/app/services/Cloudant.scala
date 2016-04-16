@@ -98,11 +98,11 @@ object Cloudant {
    * member associated with the specified ID. This method does nothing if there
    * is no such member in the Cloudant database.
    *
-   * @param id          the ID of the Nippon48 member to be updated
-   * @param groups      the new groups
-   * @param teams       the new teams
-   * @param isCaptain   `true` if the Nippon48 member is a captain, or `false`
-   *                    otherwise
+   * @param id         the ID of the Nippon48 member to be updated
+   * @param groups     the new groups
+   * @param teams      the new teams
+   * @param isCaptain  `true` if the Nippon48 member is now a captain, or
+   *                   `false` otherwise
    */
   def update(id: String, groups: java.util.List[String],
     teams: java.util.List[String], isCaptain: Boolean): Unit = {

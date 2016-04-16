@@ -10,7 +10,7 @@ package controllers
 
 import java.text.SimpleDateFormat
 import models.Nippon48Member
-import models.forms.Nippon48MemberData
+import models.forms.{Nippon48MemberData, Nippon48MemberUpdateData}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json._
@@ -21,7 +21,7 @@ import services.Cloudant
 
 /**
  * '''Nippon48''' is an interactive web application that lets the user
- * add/delete Nippon48 members in the database, and also update their stats.
+ * add/delete Nippon48 members in the database, and also edit their stats.
  */
 object Nippon48Controller extends Controller {
 
@@ -36,10 +36,10 @@ object Nippon48Controller extends Controller {
     }.isSuccess
   }
 
-  //=============================== Private form ===============================
+  //============================== Private forms ===============================
 
   /** The form used to add a Nippon48 member to the database. */
-  private val form = Form {
+  private val addMemberForm = Form {
     mapping(
       Nippon48MemberData.FIRST_NAME_KEY -> nonEmptyText,
       Nippon48MemberData.LAST_NAME_KEY -> nonEmptyText,
@@ -53,6 +53,17 @@ object Nippon48Controller extends Controller {
     )(Nippon48MemberData.apply)(Nippon48MemberData.unapply)
   }
 
+  /** The form used to edit the stats of a Nippon48 member in the database. */
+  private val editMemberForm = Form {
+    mapping(
+      Nippon48MemberData.PRIMARY_GROUP_KEY -> nonEmptyText,
+      Nippon48MemberData.SECONDARY_GROUP_KEY -> optional(nonEmptyText),
+      Nippon48MemberData.PRIMARY_TEAM_KEY -> optional(nonEmptyText),
+      Nippon48MemberData.SECONDARY_TEAM_KEY -> optional(nonEmptyText),
+      Nippon48MemberData.CAPTAIN_STATUS_KEY -> text
+    )(Nippon48MemberUpdateData.apply)(Nippon48MemberUpdateData.unapply)
+  }
+
   //================================== Pages ===================================
 
   /**
@@ -63,12 +74,27 @@ object Nippon48Controller extends Controller {
   def index = Action { Ok(views.html.index("Welcome to Nippon48!")) }
 
   /**
+   * Renders the page of this application where the user can edit the stats of
+   * the Nippon48 member associated with the specified ID.
+   *
+   * @param id  the ID of the Nippon48 member to be updated
+   *
+   * @return the GET action
+   */
+  def memberUpdatePage(id: String) = Action {
+    Nippon48Member(id) match {
+      case Some(member) => Ok(views.html.edit(member, editMemberForm) )
+      case None => NotFound
+    }
+  }
+
+  /**
    * Renders the page of this application where the user can add a Nippon48
    * member to the database.
    *
    * @return the GET action
    */
-  def newMember = Action { Ok(views.html.member(form, None)) }
+  def newMemberPage = Action { Ok(views.html.add(addMemberForm, None)) }
 
   //========================== RESTful API endpoints ===========================
 
@@ -80,11 +106,10 @@ object Nippon48Controller extends Controller {
    */
   def addMember() = Action { implicit request =>
 
-    // User input
-    val input = form.bindFromRequest
+    val input = addMemberForm.bindFromRequest
 
     input.fold(
-      formWithErrors => BadRequest(views.html.member(formWithErrors, None)),
+      formWithErrors => BadRequest(views.html.add(formWithErrors, None)),
       value => {
 
         val minAge = Nippon48Member.MIN_AGE
@@ -100,27 +125,86 @@ object Nippon48Controller extends Controller {
           val error = "Nippon48 members must currently be between " +
             s"$minAge and $maxAge, inclusively. " +
             s"(${member.name} is currently $age.)"
-          BadRequest(views.html.member(input, Some(error)))
+          BadRequest(views.html.add(input, Some(error)))
         } else if (group2.isDefined && group1 == group2.get) {
           val error = "The primary and secondary idol girl groups " +
             "cannot be the same."
-          BadRequest(views.html.member(input, Some(error)))
+          BadRequest(views.html.add(input, Some(error)))
         } else if (team2.isDefined && team1.isEmpty) {
           val error = s"The secondary team ${value.secondaryTeam.get} " +
             "is selected, but the primary team is not selected."
-          BadRequest(views.html.member(input, Some(error)))
+          BadRequest(views.html.add(input, Some(error)))
         } else if (team2.isDefined && team1.get == team2.get) {
           val error = s"The primary and secondary teams cannot be the same."
-          BadRequest(views.html.member(input, Some(error)))
+          BadRequest(views.html.add(input, Some(error)))
         } else if (Nippon48Member(member.getId).isDefined) {
           val error = s"${member.name} is already in the database."
-          BadRequest(views.html.member(input, Some(error)))
+          BadRequest(views.html.add(input, Some(error)))
         } else {
           Cloudant add member
           Redirect(routes.Nippon48Controller.index)
         }
       }
     )
+  }
+
+  /**
+   * Edits the stats of the Nippon48 member associated with the specified ID.
+   *
+   * @param id  the ID of the Nippon48 member to be updated
+   *
+   * @return the POST action
+   */
+  def editMember(id: String) = Action { implicit request =>
+
+    Nippon48Member(id) match {
+
+      case Some(member) =>
+
+        val input = editMemberForm.bindFromRequest
+
+        input.fold(
+          formWithErrors =>
+            BadRequest(views.html.editWithError(member, formWithErrors, None)),
+          value => {
+
+            val group1 = value.primaryGroup
+            val group2 = value.secondaryGroup
+            val team1 = value.primaryTeam
+            val team2 = value.secondaryTeam
+
+            if (group2.isDefined && group1 == group2.get) {
+              val error = "The primary and secondary idol girl groups " +
+                "cannot be the same."
+              BadRequest(views.html.editWithError(member, input, Some(error)))
+            } else if (team2.isDefined && team1.isEmpty) {
+              val error = s"The secondary team ${value.secondaryTeam.get} " +
+                "is selected, but the primary team is not selected."
+              BadRequest(views.html.editWithError(member, input, Some(error)))
+            } else if (team2.isDefined && team1.get == team2.get) {
+              val error = s"The primary and secondary teams cannot be the same."
+              BadRequest(views.html.editWithError(member, input, Some(error)))
+            } else {
+
+              var groups = List(value.primaryGroup)
+              var teams = List[String]()
+
+              if (value.secondaryGroup.isDefined)
+                groups = groups :+ value.secondaryGroup.get
+              if (value.primaryTeam.isDefined)
+                teams = teams :+ value.primaryTeam.get
+              if (value.secondaryTeam.isDefined)
+                teams = teams :+ value.secondaryTeam.get
+
+              Cloudant.update(id, groups.asJava, teams.asJava,
+                value.isCaptain == "Yes")
+              Redirect(routes.Nippon48Controller.index)
+            }
+          }
+        )
+
+      case None => BadRequest
+    }
   }
 
   /**

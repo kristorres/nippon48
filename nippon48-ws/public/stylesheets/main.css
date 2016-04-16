@@ -22,7 +22,7 @@ article {
 @media screen and (min-width: 768px) {
   article {
     border-radius: 16px;
-    max-width: 730px;
+    max-width: 975px;
     margin-bottom: 48px;
   }
 }
@@ -127,8 +127,12 @@ nav {
   background-color: #FFFFF0;
 }
 
+.btn-info {
+  margin: 4px;
+}
+
 .btn-danger {
-  width: 75px;
+  margin: 4px;
 }
 
 /*------------------------------- Form inputs --------------------------------*/

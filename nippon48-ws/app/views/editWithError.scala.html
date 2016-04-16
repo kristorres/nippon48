@@ -1,0 +1,55 @@
+@******************************************************************************
+ * Generates an HTML body with a form for the user to edit the stats of the   *
+ * specified Nippon48 member in the database.                                 *
+ *                                                                            *
+ * @param member  the Nippon48 member                                         *
+ * @param form    the HTML form                                               *
+ * @param error   an ''optional'' that contains the error message, or `None`  *
+ *                otherwise                                                   *
+ ******************************************************************************@
+@(member: models.Nippon48Member,
+  form: Form[models.forms.Nippon48MemberUpdateData], error: Option[String])
+
+@import bootstrap._
+@import models.Nippon48Member.{validGroups, validTeams}
+@import models.forms.Nippon48MemberData._
+
+@main(s"Edit Stats for ${member.name} – Nippon48",
+  s"Edit Stats for ${member.name}") {
+
+  <!-- Any error that is not associated to an HTML form element goes here. -->
+  @if(error.isDefined) {
+    <div id="error" class="text-center"><span>@error.get</span></div>
+  }
+
+  <!-- The form used to edit the stats of a Nippon48 member in the database. -->
+  @defining(member.getId) { id =>
+    @helper.form(action = routes.Nippon48Controller.editMember(id)) {
+
+      <!-- Primary idol girl group combobox -->
+      @combobox(form(PRIMARY_GROUP_KEY), s"pg-$id", "Primary group:",
+        validGroups, true)
+
+      <!-- Secondary idol girl group combobox -->
+      @combobox(form(SECONDARY_GROUP_KEY), s"sg-$id", "Secondary group:",
+        validGroups, false)
+
+      <!-- Primary team combobox -->
+      @combobox(form(PRIMARY_TEAM_KEY), s"pt-$id", "Primary team:", validTeams,
+        false)
+
+      <!-- Secondary team combobox -->
+      @combobox(form(SECONDARY_TEAM_KEY), s"st-$id", "Secondary team:",
+        validTeams, false)
+
+      <!-- Captain status radio button group -->
+      @radio(form(CAPTAIN_STATUS_KEY), "Is the member a team captain?",
+        Seq("Yes", "No"), true)
+
+      <!-- OK button -->
+      <div align="center">
+        <button class="btn btn-default" type="submit">OK</button>
+      </div>
+    }
+  }
+}
