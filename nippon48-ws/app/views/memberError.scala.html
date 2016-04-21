@@ -1,0 +1,12 @@
+@******************************************************************************
+ * Generates an HTML body that displays the specified 404 Not Found error     *
+ * message for an invalid Nippon48 member.                                    *
+ *                                                                            *
+ * @param message  the error message                                          *
+ ******************************************************************************@
+@(message: String)
+
+@main("Member Not Found – Nippon48", "Member Not Found") {
+  <img class="img-responsive" src="@routes.Assets.at("images/北原里英.jpg")"/>
+  <h2 align="center">@message</h2>
+}

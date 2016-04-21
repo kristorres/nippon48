@@ -133,12 +133,12 @@ class Nippon48Member extends CouchDbDocument {
   @JsonIgnore
   def age: Int = {
 
-    val dashIndex1 = this.birthdate indexOf '/'
-    val dashIndex2 = this.birthdate lastIndexOf '/'
+    val slashIndex1 = this.birthdate indexOf '/'
+    val slashIndex2 = this.birthdate lastIndexOf '/'
 
-    val year = this.birthdate.substring(dashIndex2 + 1).toInt
-    val month = this.birthdate.substring(0, dashIndex1).toInt
-    val day = this.birthdate.substring(dashIndex1 + 1, dashIndex2).toInt
+    val year = this.birthdate.substring(slashIndex2 + 1).toInt
+    val month = this.birthdate.substring(0, slashIndex1).toInt
+    val day = this.birthdate.substring(slashIndex1 + 1, slashIndex2).toInt
 
     val today = new LocalDate
     val birthdate = new LocalDate(year, month, day)

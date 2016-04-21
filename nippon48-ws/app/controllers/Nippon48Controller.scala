@@ -84,7 +84,9 @@ object Nippon48Controller extends Controller {
   def memberUpdatePage(id: String) = Action {
     Nippon48Member(id) match {
       case Some(member) => Ok(views.html.edit(member, editMemberForm) )
-      case None => NotFound
+      case None =>
+        NotFound(views.html.memberError("Sorry. " +
+          "The Nippon48 member does not exist in the database."))
     }
   }
 
@@ -114,12 +116,16 @@ object Nippon48Controller extends Controller {
 
         val minAge = Nippon48Member.MIN_AGE
         val maxAge = Nippon48Member.MAX_AGE
+
         val group1 = value.primaryGroup
         val group2 = value.secondaryGroup
         val team1 = value.primaryTeam
         val team2 = value.secondaryTeam
+
         val member = Nippon48Member(value)
         val age = member.age
+        val isCaptain = member.isCaptain
+        val isKenkyuusei = member.teams == List("Kenkyuusei").asJava
 
         if (age < minAge || age > maxAge) {
           val error = "Nippon48 members must currently be between " +
@@ -136,6 +142,9 @@ object Nippon48Controller extends Controller {
           BadRequest(views.html.add(input, Some(error)))
         } else if (team2.isDefined && team1.get == team2.get) {
           val error = s"The primary and secondary teams cannot be the same."
+          BadRequest(views.html.add(input, Some(error)))
+        } else if (isKenkyuusei && isCaptain) {
+          val error = "A kenkyuusei cannot be a captain."
           BadRequest(views.html.add(input, Some(error)))
         } else if (Nippon48Member(member.getId).isDefined) {
           val error = s"${member.name} is already in the database."
@@ -186,6 +195,7 @@ object Nippon48Controller extends Controller {
               BadRequest(views.html.editWithError(member, input, Some(error)))
             } else {
 
+              val isCaptain = value.isCaptain == "Yes"
               var groups = List(value.primaryGroup)
               var teams = List[String]()
 
@@ -196,14 +206,19 @@ object Nippon48Controller extends Controller {
               if (value.secondaryTeam.isDefined)
                 teams = teams :+ value.secondaryTeam.get
 
-              Cloudant.update(id, groups.asJava, teams.asJava,
-                value.isCaptain == "Yes")
-              Redirect(routes.Nippon48Controller.index)
+              if (teams == List("Kenkyuusei") && isCaptain) {
+                val error = "A kenkyuusei cannot be a captain."
+                BadRequest(views.html.editWithError(member, input, Some(error)))
+              } else {
+                Cloudant.update(id, groups.asJava, teams.asJava, isCaptain)
+                Redirect(routes.Nippon48Controller.index)
+              }
             }
           }
         )
 
-      case None => BadRequest
+      case None => NotFound(views.html.memberError("Sorry. " +
+        "The Nippon48 member has recently been removed from the database."))
     }
   }
 
@@ -223,7 +238,7 @@ object Nippon48Controller extends Controller {
     else {
       Nippon48Member.validGroups.find(_ equalsIgnoreCase name) match {
         case Some(group) => Ok(views.html.group(group))
-        case None => NotFound(views.html.error(name))
+        case None => NotFound(views.html.groupError(name))
       }
     }
   }
