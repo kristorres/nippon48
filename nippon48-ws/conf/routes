@@ -1,15 +1,20 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# FILE:   nippon48-ws/conf/routes
-# AUTHOR: Kris Torres
-# DATE:   2016/01/30
+# nippon48-ws/conf/routes
 #
-# This file defines all the application routes (higher priority routes first).
+# This configuration file is part of the Nippon48 web application project
+#
+# Created by Kris Torres on Saturday, January 30, 2016
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##
+## This file defines all the routes for the Nippon48 application
+## (higher priority routes first).
+##
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Pages
 # ~~~~~
 GET     /                 controllers.Nippon48Controller.index
-GET     /groups/:name     controllers.Nippon48Controller.getGroup(name: String)
+GET     /groups/:name     controllers.Nippon48Controller.groupPage(name: String)
 GET     /add-member       controllers.Nippon48Controller.newMemberPage
 GET     /edit-member/:id  controllers.Nippon48Controller.memberUpdatePage(id: String)
 

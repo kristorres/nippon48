@@ -1,13 +1,17 @@
-//==============================================================================
-// FILE:   nippon48-ws/test/controllers/Nippon48ControllerPageSpec.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/01/30
+//===-- nippon48-ws/test/specs/controllers/Nippon48Controlle… -*- Scala -*-===//
 //
-// This file includes all the page rendering unit tests for the Nippon48
-// application.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Saturday, January 30, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48ControllerPageSpec` class, which
+/// encapsulates all the page rendering unit tests for the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
-package controllers
+package specs.controllers
 
 import org.specs2.mutable.Specification
 import play.api.test.{FakeRequest, WithApplication}
@@ -22,10 +26,10 @@ import play.api.test.Helpers._
  * this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only controllers.Nippon48ControllerPageSpec"
+ * sbt "project nippon48-ws" "test-only specs.controllers.Nippon48ControllerPageSpec"
  * }}}
  */
-class Nippon48ControllerPageSpec extends Specification {
+final class Nippon48ControllerPageSpec extends Specification {
 
   "Nippon48" should {
 

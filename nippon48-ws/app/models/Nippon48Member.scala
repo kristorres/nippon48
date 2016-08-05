@@ -1,10 +1,15 @@
-//==============================================================================
-// FILE:   nippon48-ws/app/models/Nippon48Member.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/01/31
+//===-- nippon48-ws/app/models/Nippon48Member.scala -----------*- Scala -*-===//
 //
-// This file includes the `Nippon48Member` model class and its companion object.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Sunday, January 31, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48Member` class and its companion object, the
+/// former of which is a '''model''' of the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
 package models
 
@@ -85,9 +90,9 @@ import services.Cloudant
  */
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(Array("_attachments", "_conflicts", "_revisions"))
-class Nippon48Member extends CouchDbDocument {
+final class Nippon48Member extends CouchDbDocument {
 
-  //============================= JSON properties ==============================
+  //===------------------------- JSON properties --------------------------===//
 
   /**
    * The “romanized” version of the name of this Nippon48 member. It consists of
@@ -110,7 +115,7 @@ class Nippon48Member extends CouchDbDocument {
   /** The captain status of this Nippon48 member. */
   @JsonProperty("captain") var isCaptain = false
 
-  //================================= Mutator ==================================
+  //===----------------------------- Mutator ------------------------------===//
 
   /**
    * Sets the given name and family name (surname) of this Nippon48 member.
@@ -123,7 +128,7 @@ class Nippon48Member extends CouchDbDocument {
     _name_en = firstName + " " + lastName
   }
 
-  //================================ Accessors =================================
+  //===---------------------------- Accessors -----------------------------===//
 
   /**
    * Gets the age of this Nippon48 member.

@@ -1,10 +1,14 @@
-//==============================================================================
-// FILE:   scripts/src/main/scala/net/stage48/scripts/DatabaseCleaner.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/02/21
+//===-- scripts/src/main/scala/net/stage48/scripts/DatabaseC… -*- Scala -*-===//
 //
-// This file includes the `DatabaseCleaner` singleton object.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Sunday, February 21, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `DatabaseCleaner` singleton object.
+///
+//===----------------------------------------------------------------------===//
 
 package net.stage48.scripts
 
@@ -27,7 +31,7 @@ object DatabaseCleaner {
     val directory = new File("scripts")
     val classLoader = this.getClass.getClassLoader
     Play start new DefaultApplication(directory, classLoader, null, Mode.Dev)
-    Cloudant.getMembers.foreach(Cloudant remove _.getId)
+    Cloudant.getMembers(None).foreach(Cloudant remove _.getId)
     Play.stop()
   }
 }

@@ -1,13 +1,19 @@
-//==============================================================================
-// FILE:   nippon48-ws/test/models/Nippon48MemberSpec.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/02/01
+//===-- nippon48-ws/test/specs/models/Nippon48MemberSpec.sca… -*- Scala -*-===//
 //
-// This file includes all the unit tests for the `Nippon48Member` model class.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Monday, February 1, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48MemberSpec` class, which encapsulates all
+/// the unit tests for the `Nippon48Member` model class.
+///
+//===----------------------------------------------------------------------===//
 
-package models
+package specs.models
 
+import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
 
@@ -18,10 +24,10 @@ import org.specs2.mutable.Specification
  * this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only models.Nippon48MemberSpec"
+ * sbt "project nippon48-ws" "test-only specs.models.Nippon48MemberSpec"
  * }}}
  */
-class Nippon48MemberSpec extends Specification {
+final class Nippon48MemberSpec extends Specification {
 
   "Nippon48" should {
 

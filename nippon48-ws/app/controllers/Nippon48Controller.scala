@@ -1,10 +1,15 @@
-//==============================================================================
-// FILE:   nippon48-ws/app/controllers/Nippon48Controller.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/01/30
+//===-- nippon48-ws/app/controllers/Nippon48Controller.scala --*- Scala -*-===//
 //
-// This file includes the `Nippon48Controller` singleton object.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Saturday, January 30, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48Controller` singleton object, which is the
+/// '''main controller''' of the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
 package controllers
 
@@ -25,7 +30,7 @@ import services.Cloudant
  */
 object Nippon48Controller extends Controller {
 
-  //============================= Private mapping ==============================
+  //===------------------------- Private mapping --------------------------===//
 
   /** The mapping for a valid date in the format MM/DD/YYYY. */
   private val validDate = text.verifying { date =>
@@ -36,7 +41,7 @@ object Nippon48Controller extends Controller {
     }.isSuccess
   }
 
-  //============================== Private forms ===============================
+  //===-------------------------- Private forms ---------------------------===//
 
   /** The form used to add a Nippon48 member to the database. */
   private val addMemberForm = Form {
@@ -64,26 +69,54 @@ object Nippon48Controller extends Controller {
     )(Nippon48MemberUpdateData.apply)(Nippon48MemberUpdateData.unapply)
   }
 
-  //================================== Pages ===================================
+  //===------------------------------ Pages -------------------------------===//
 
   /**
-   * Renders the index page of this application.
+   * Creates an `Action` to render the page that lists all the Nippon48 members
+   * of the specified idol girl group and their stats in a table. This method
+   * will be called when the application receives a `GET` request with a path of
+   * `/groups/:name`.<br/><br/>
    *
-   * @return the GET action
+   * '''Note that the supplied argument in this method is __case-sensitive__.'''
+   *
+   * @param name  the group (`"all"` to list ''all'' the Nippon48 members in the
+   *              database)
+   *
+   * @return the `Action` to handle the `GET` request
+   */
+  def groupPage(name: String) = Action {
+    if (name equalsIgnoreCase "all") {
+      Redirect(routes.Nippon48Controller.index)
+    } else {
+      Nippon48Member.validGroups.find(_ equalsIgnoreCase name) match {
+        case Some(group) => Ok(views.html.group(group))
+        case None => NotFound(views.html.groupError(name))
+      }
+    }
+  }
+
+  /**
+   * Creates an `Action` to render the application’s home page. This method will
+   * be called when the application receives a `GET` request with a path of `/`.
+   *
+   * @return the `Action` to handle the `GET` request
    */
   def index = Action { Ok(views.html.index("Welcome to Nippon48!")) }
 
   /**
-   * Renders the page of this application where the user can edit the stats of
-   * the Nippon48 member associated with the specified ID.
+   * Creates an `Action` to render the page where the user can edit the stats of
+   * the Nippon48 member associated with the specified ID. This method will be
+   * called when the application receives a `GET` request with a path of
+   * `/edit-member/:id`.
    *
    * @param id  the ID of the Nippon48 member to be updated
    *
-   * @return the GET action
+   * @return the `Action` to handle the `GET` request
    */
   def memberUpdatePage(id: String) = Action {
     Nippon48Member(id) match {
-      case Some(member) => Ok(views.html.edit(member, editMemberForm) )
+      case Some(member) =>
+        Ok(views.html.edit(member, editMemberForm) )
       case None =>
         NotFound(views.html.memberError("Sorry. " +
           "The Nippon48 member does not exist in the database."))
@@ -91,20 +124,22 @@ object Nippon48Controller extends Controller {
   }
 
   /**
-   * Renders the page of this application where the user can add a Nippon48
-   * member to the database.
+   * Creates an `Action` to render the page where the user can add a Nippon48
+   * member to the database. This method will be called when the application
+   * receives a `GET` request with a path of `/add-member`.
    *
-   * @return the GET action
+   * @return the `Action` to handle the `GET` request
    */
   def newMemberPage = Action { Ok(views.html.add(addMemberForm, None)) }
 
-  //========================== RESTful API endpoints ===========================
+  //===---------------------- RESTful API endpoints -----------------------===//
 
   /**
-   * Adds a Nippon48 member to the database, then reloads the index page of this
-   * application.
+   * Creates an `Action` to add a Nippon48 member to the database, then redirect
+   * to the application’s home page. This method will be called when the
+   * application receives a `POST` request with a path of `/member`.
    *
-   * @return the POST action
+   * @return the `Action` to handle the `POST` request
    */
   def addMember() = Action { implicit request =>
 
@@ -158,11 +193,13 @@ object Nippon48Controller extends Controller {
   }
 
   /**
-   * Edits the stats of the Nippon48 member associated with the specified ID.
+   * Creates an `Action` to edit the stats of the Nippon48 member associated
+   * with the specified ID. This method will be called when the application
+   * receives a `POST` request with a path of `/member/:id`.
    *
    * @param id  the ID of the Nippon48 member to be updated
    *
-   * @return the POST action
+   * @return the `Action` to handle the `POST` request
    */
   def editMember(id: String) = Action { implicit request =>
 
@@ -223,46 +260,28 @@ object Nippon48Controller extends Controller {
   }
 
   /**
-   * Renders the page of this application that lists all the Nippon48 members of
-   * the specified idol girl group and their stats in a table. '''Note that the
-   * supplied argument in this method is __case-sensitive__.'''
+   * Creates an `Action` to list all the Nippon48 members in the database in
+   * JSON format. This method will be called when the application receives a
+   * `GET` request with a path of `/members`.
    *
-   * @param name  the group (`"all"` to list ''all'' the members in the
-   *              database)
-   *
-   * @return the GET action
-   */
-  def getGroup(name: String) = Action {
-    if (name equalsIgnoreCase "all")
-      Redirect(routes.Nippon48Controller.index)
-    else {
-      Nippon48Member.validGroups.find(_ equalsIgnoreCase name) match {
-        case Some(group) => Ok(views.html.group(group))
-        case None => NotFound(views.html.groupError(name))
-      }
-    }
-  }
-
-  /**
-   * Lists all the Nippon48 members in the database in JSON format.
-   *
-   * @return the GET action
+   * @return the `Action` to handle the `GET` request
    */
   def getMembers = Action {
     Ok(Json.toJson(Cloudant getMembers None)(Nippon48MemberWriterList))
   }
 
   /**
-   * Removes the Nippon48 member associated with the specified ID from the
-   * database.
+   * Creates an `Action` to remove the Nippon48 member associated with the
+   * specified ID from the database. This method will be called when the
+   * application receives a `DELETE` request with a path of `/members/:id`.
    *
    * @param id  the ID of the Nippon48 member to be removed
    *
-   * @return the DELETE action
+   * @return the `Action` to handle the `DELETE` request
    */
   def removeMember(id: String) = Action { Cloudant remove id; Ok }
 
-  //=========================== Private JSON writers ===========================
+  //===----------------------- Private JSON writers -----------------------===//
 
   /** The inner singleton object that writes a Nippon48 member as a JSON. */
   private object Nippon48MemberWriter extends Writes[Nippon48Member] {

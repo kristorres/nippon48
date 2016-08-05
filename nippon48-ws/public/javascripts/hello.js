@@ -1,12 +1,17 @@
-//==============================================================================
-// FILE:   nippon48-ws/public/javascripts/hello.js
-// AUTHOR: Kris Torres
-// DATE:   2016/01/30
+//===-- nippon48-ws/public/javascripts/hello.js ---------------*- Scala -*-===//
 //
-// This file includes all the Javascript functions for the Nippon48 application.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Saturday, January 30, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains all the JavaScript functions for the Nippon48
+/// application.
+///
+//===----------------------------------------------------------------------===//
 
-//================================= Functions ==================================
+//===----------------------------- Functions ------------------------------===//
 
 /**
  * Sets the census statement, which reports the number of Nippon48 members in
@@ -73,7 +78,7 @@ function setJumbotronColors(background, foreground) {
   jumbotron.css("color", foreground);
 }
 
-//================================ Main driver =================================
+//===---------------------------- Main driver -----------------------------===//
 
 $(document).ready(function() {
 

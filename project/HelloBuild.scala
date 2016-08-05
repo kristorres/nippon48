@@ -1,11 +1,15 @@
-//==============================================================================
-// FILE:   project/HelloBuild.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/02/20
+//===-- project/HelloBuild.scala ------------------------------*- Scala -*-===//
 //
-// This file includes all the build settings and definitions of the root project
-// and sub-projects.
-//==============================================================================
+// This configuration file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Saturday, February 20, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `HelloBuild` singleton object, which encapsulates all
+/// the build settings and definitions of the root project and sub-projects.
+///
+//===----------------------------------------------------------------------===//
 
 import play.PlayScala
 import sbt._
@@ -13,22 +17,22 @@ import Keys._
 
 object HelloBuild extends Build {
 
-  //============================ Library dependency ============================
+  //===------------------------ Library dependency ------------------------===//
 
   private val libraryDependency = "org.ektorp" % "org.ektorp" % "1.4.2"
 
-  //================================= Resolver =================================
+  //===----------------------------- Resolver -----------------------------===//
 
   private val resolver = {
     "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
   }
 
-  //=========================== Project identifiers ============================
+  //===----------------------- Project identifiers ------------------------===//
 
   private val NIPPON48_ID = "nippon48-ws"
   private val SCRIPTS_ID = "scripts"
 
-  //=========================== Project descriptions ===========================
+  //===----------------------- Project descriptions -----------------------===//
 
   lazy val NIPPON48_DESCRIPTION = {
     "The official Play web application dedicated to AKB48!"
@@ -38,7 +42,7 @@ object HelloBuild extends Build {
     "Should only be run locally on the developers’ workstation."
   }
 
-  //=========================== Project definitions ============================
+  //===----------------------- Project definitions ------------------------===//
 
   lazy val root = Project("root", file("."))
 
@@ -61,7 +65,7 @@ object HelloBuild extends Build {
     .dependsOn(nippon48)
     .aggregate(nippon48)
 
-  //============================== Build settings ==============================
+  //===-------------------------- Build settings --------------------------===//
 
   object Settings {
     val ORGANIZATION = "net.stage48"

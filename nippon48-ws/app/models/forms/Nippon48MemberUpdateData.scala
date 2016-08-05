@@ -1,10 +1,15 @@
-//==============================================================================
-// FILE:   nippon48-ws/app/models/forms/Nippon48MemberUpdateData.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/03/27
+//===-- nippon48-ws/app/models/forms/Nippon48MemberUpdateDat… -*- Scala -*-===//
 //
-// This file includes the `Nippon48MemberUpdateData` model case class.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Sunday, March 27, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48MemberUpdateData` case class, which is a
+/// '''model''' of the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
 package models.forms
 
@@ -21,6 +26,6 @@ package models.forms
  * @param isCaptain       `"Yes"` if the Nippon48 member is now a captain, or
  *                        `"No"` otherwise
  */
-case class Nippon48MemberUpdateData(primaryGroup: String,
+final case class Nippon48MemberUpdateData(primaryGroup: String,
   secondaryGroup: Option[String], primaryTeam: Option[String],
   secondaryTeam: Option[String], isCaptain: String)

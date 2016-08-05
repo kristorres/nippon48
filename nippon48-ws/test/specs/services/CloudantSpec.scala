@@ -1,19 +1,24 @@
-//==============================================================================
-// FILE:   nippon48-ws/test/services/CloudantSpec.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/02/01
+//===-- nippon48-ws/test/specs/services/CloudantSpec.scala ----*- Scala -*-===//
 //
-// This file includes all the unit tests for the `Cloudant` service singleton
-// object.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Monday, February 1, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `CloudantSpec` class, which encapsulates all the unit
+/// tests for the `Cloudant` service singleton object.
+///
+//===----------------------------------------------------------------------===//
 
-package services
+package specs.services
 
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
 import play.api.test.WithApplication
 import scala.collection.JavaConverters._
+import services.Cloudant
 
 /**
  * The unit specification class for the [[services.Cloudant]] singleton object.
@@ -22,10 +27,10 @@ import scala.collection.JavaConverters._
  * root directory of this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only services.CloudantSpec"
+ * sbt "project nippon48-ws" "test-only specs.services.CloudantSpec"
  * }}}
  */
-class CloudantSpec extends Specification {
+final class CloudantSpec extends Specification {
 
   "Cloudant" should {
 

@@ -1,10 +1,15 @@
-//==============================================================================
-// FILE:   nippon48-ws/app/services/Cloudant.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/01/31
+//===-- nippon48-ws/app/services/Cloudant.scala ---------------*- Scala -*-===//
 //
-// This file includes the `Cloudant` service singleton object.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Sunday, January 31, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Cloudant` singleton object, which is the main
+/// service layer in the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
 package services
 
@@ -29,7 +34,7 @@ import scala.util.Try
  */
 object Cloudant {
 
-  //============================== Private fields ==============================
+  //===-------------------------- Private fields --------------------------===//
 
   /** The loaded configuration for Cloudant. */
   private lazy val configuration = ConfigFactory.load
@@ -45,7 +50,7 @@ object Cloudant {
 
   load()
 
-  //============================= CRUD operations ==============================
+  //===------------------------- CRUD operations --------------------------===//
 
   /**
    * Adds a Nippon48 member to the Cloudant database.
@@ -120,7 +125,7 @@ object Cloudant {
     }
   }
 
-  //============================== Other methods ===============================
+  //===-------------------------- Other methods ---------------------------===//
 
   /** Connects to the configured Cloudant database. */
   def connectToDatabase(): Unit = {
@@ -165,7 +170,7 @@ object Cloudant {
     members
   }
 
-  //============================= Private methods ==============================
+  //===------------------------- Private methods --------------------------===//
 
   /** Cleans up any idle connections if the configuration is set to `true`. */
   private def cleanUpIdleConnections(): Unit = {
@@ -228,7 +233,7 @@ object Cloudant {
     }
   }
 
-  //============================= Private runnable =============================
+  //===------------------------- Private runnable -------------------------===//
 
   /**
    * The inner singleton object that validates the CouchDB view of all the

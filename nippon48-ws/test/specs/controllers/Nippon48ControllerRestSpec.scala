@@ -1,13 +1,17 @@
-//==============================================================================
-// FILE:   nippon48-ws/test/controllers/Nippon48ControllerRestSpec.scala
-// AUTHOR: Kris Torres
-// DATE:   2016/04/21
+//===-- nippon48-ws/test/specs/controllers/Nippon48Controlle… -*- Scala -*-===//
 //
-// This file includes all the RESTful API unit tests for the Nippon48
-// application.
-//==============================================================================
+// This source file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Thursday, April 21, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains the `Nippon48ControllerRestSpec` class, which
+/// encapsulates all the RESTful API unit tests for the Nippon48 application.
+///
+//===----------------------------------------------------------------------===//
 
-package controllers
+package specs.controllers
 
 import org.specs2.mutable.Specification
 import play.api.libs.json.Json
@@ -21,14 +25,14 @@ import play.api.test.Helpers._
  * command in the root directory of this project:
  *
  * {{{
- * sbt "project nippon48-ws" "test-only controllers.Nippon48ControllerRestSpec"
+ * sbt "project nippon48-ws" "test-only specs.controllers.Nippon48ControllerRestSpec"
  * }}}
  */
-class Nippon48ControllerRestSpec extends Specification {
+final class Nippon48ControllerRestSpec extends Specification {
 
   "Nippon48" should {
 
-    //======================= Member addition unit tests =======================
+    //===------------------- Member addition unit tests -------------------===//
 
     "fail to add a member (invalid age)" in new WithApplication {
 
@@ -200,7 +204,7 @@ class Nippon48ControllerRestSpec extends Specification {
       content must contain(opt4)
     }
 
-    //======================== Member update unit tests ========================
+    //===-------------------- Member update unit tests --------------------===//
 
     "fail to update a member (duplicate groups)" in new WithApplication {
 
@@ -316,7 +320,7 @@ class Nippon48ControllerRestSpec extends Specification {
       content must contain(opt4)
     }
 
-    //======================= Member removal unit tests ========================
+    //===------------------- Member removal unit tests --------------------===//
 
     "successfully remove a member" in new WithApplication {
       val result = route(FakeRequest(DELETE, "/members/eguchi-aimi")).get

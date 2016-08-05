@@ -1,10 +1,14 @@
-//==============================================================================
-// FILE:   build.sbt
-// AUTHOR: Kris Torres
-// DATE:   2016/01/30
+//===-- build.sbt ---------------------------------------------*- Scala -*-===//
 //
-// This file includes all the build settings for the root project.
-//==============================================================================
+// This configuration file is part of the Nippon48 web application project
+//
+// Created by Kris Torres on Saturday, January 30, 2016
+//
+//===----------------------------------------------------------------------===//
+///
+/// This file contains all the build settings for the root project.
+///
+//===----------------------------------------------------------------------===//
 
 name := "nippon48"
 
