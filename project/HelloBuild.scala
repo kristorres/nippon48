@@ -69,7 +69,7 @@ object HelloBuild extends Build {
 
   object Settings {
     val ORGANIZATION = "net.stage48"
-    val VERSION = "1.0-β1"
-    val SCALA_VERSION = "2.11.7"
+    val VERSION = "1.0.0-SNAPSHOT"
+    val SCALA_VERSION = "2.11.8"
   }
 }
