@@ -39,7 +39,7 @@ final class Nippon48ControllerPageSpec extends Specification {
       status(result) mustEqual OK
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
       content must contain("<title>Nippon48</title>")
-      content must contain("<h1>Welcome to Nippon48!</h1>")
+      content must contain("<h1>Nippon48</h1>")
     }
 
     "render the page related to Nogizaka46" in new WithApplication {
@@ -47,7 +47,7 @@ final class Nippon48ControllerPageSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual OK
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Nogizaka46 – Nippon48</title>")
+      content must contain("<title>Nogizaka46 — Nippon48</title>")
       content must contain("<h1>Nogizaka46</h1>")
       content must contain("<h2>What Is Nogizaka46?</h2>")
     }
@@ -57,7 +57,7 @@ final class Nippon48ControllerPageSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual NOT_FOUND
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Group Not Found – Nippon48</title>")
+      content must contain("<title>Group Not Found — Nippon48</title>")
       content must contain("<h1>Group Not Found</h1>")
       content must contain("“MNL48”")
     }
@@ -67,7 +67,7 @@ final class Nippon48ControllerPageSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual NOT_FOUND
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Member Not Found – Nippon48</title>")
+      content must contain("<title>Member Not Found — Nippon48</title>")
       content must contain("<h1>Member Not Found</h1>")
       content must contain("The Nippon48 member does not exist")
     }

@@ -51,7 +51,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("Mariko Tsukamoto is currently")
     }
@@ -75,7 +75,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("groups cannot be the same")
     }
@@ -97,7 +97,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("The secondary team A is selected")
     }
@@ -120,7 +120,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("teams cannot be the same")
     }
@@ -142,7 +142,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("A kenkyuusei cannot be a captain.")
     }
@@ -181,7 +181,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Add a New Member – Nippon48</title>")
+      content must contain("<title>Add a New Member — Nippon48</title>")
       content must contain("<h1>Add a New Member</h1>")
       content must contain("Aimi Eguchi is already in the database.")
     }
@@ -189,7 +189,7 @@ final class Nippon48ControllerRestSpec extends Specification {
     "render the new page related to Aimi Eguchi" in new WithApplication {
       val result = route(FakeRequest(GET, "/edit-member/eguchi-aimi")).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       val opt1 = """<option value="AKB48" selected>AKB48</option>"""
       val opt2 = """<option value="A" selected>A</option>"""
       val opt3 = """<option value="Kenkyuusei" selected>Kenkyuusei</option>"""
@@ -219,7 +219,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val request = FakeRequest(POST, urlSuffix).withJsonBody(Json parse json)
       val result = route(request).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
       content must contain(title)
@@ -239,7 +239,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val request = FakeRequest(POST, urlSuffix).withJsonBody(Json parse json)
       val result = route(request).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
       content must contain(title)
@@ -260,7 +260,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val request = FakeRequest(POST, urlSuffix).withJsonBody(Json parse json)
       val result = route(request).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
       content must contain(title)
@@ -280,7 +280,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val request = FakeRequest(POST, urlSuffix).withJsonBody(Json parse json)
       val result = route(request).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       status(result) mustEqual BAD_REQUEST
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
       content must contain(title)
@@ -305,7 +305,7 @@ final class Nippon48ControllerRestSpec extends Specification {
     "render the updated page related to Aimi Eguchi" in new WithApplication {
       val result = route(FakeRequest(GET, "/edit-member/eguchi-aimi")).get
       val content = contentAsString(result)
-      val title = "<title>Edit Stats for Aimi Eguchi – Nippon48</title>"
+      val title = "<title>Edit Stats for Aimi Eguchi — Nippon48</title>"
       val opt1 = """<option value="AKB48" selected>AKB48</option>"""
       val opt2 = """<option value="A" selected>A</option>"""
       val opt3 = """<option value="Kenkyuusei" selected>Kenkyuusei</option>"""
@@ -341,7 +341,7 @@ final class Nippon48ControllerRestSpec extends Specification {
       val content = contentAsString(result)
       status(result) mustEqual NOT_FOUND
       contentType(result) must beSome[String].which(_ mustEqual "text/html")
-      content must contain("<title>Member Not Found – Nippon48</title>")
+      content must contain("<title>Member Not Found — Nippon48</title>")
       content must contain("<h1>Member Not Found</h1>")
       content must contain("The Nippon48 member has recently been removed")
     }

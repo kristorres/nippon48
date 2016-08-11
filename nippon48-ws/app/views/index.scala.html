@@ -1,12 +1,10 @@
 @******************************************************************************
- * Generates an HTML body that lists all the Nippon48 members and their stats *
+ * Renders an HTML body that lists all the Nippon48 members and their stats   *
  * in a table.                                                                *
- *                                                                            *
- * @param header  the header                                                  *
  ******************************************************************************@
-@(header: String)
+@()
 
-@main("Nippon48", header) {
+@main("Nippon48", None) {
 
   <p>
     The <b>Nippon48 database</b> contains all the members in the Japanese idol
@@ -14,8 +12,8 @@
     sister groups, and its rival groups. AKB48 consists of five teams:
     Team A, Team K, Team B, Team 4, and Team 8.
   </p>
-  <div class="rules">
-    <h2>Domestic Sister Groups</h2>
+  <section>
+    <h4>Domestic Sister Groups</h4>
     <ul>
       <li>
         <i>SKE48</i> (est. 2008 from Sakae, Nagoya) consists of three teams:
@@ -34,14 +32,14 @@
         Team NIII.
       </li>
     </ul>
-  </div>
-  <div class="rules">
-    <h2>Rival Groups</h2>
+  </section>
+  <section>
+    <h4>Rival Groups</h4>
     <ul>
       <li><i>Nogizaka46</i> (乃木坂46) (est. 2010 from Tokyo)</li>
       <li><i>Keyakizaka46</i> (欅坂46) (est. 2015 from Tokyo)</li>
     </ul>
-  </div>
+  </section>
   <p>
     All idol girl groups have “teams” dedicated for their <i>kenkyuusei</i>
     (trainees, lit. “research students” in Japanese). There is also a Team
@@ -62,9 +60,11 @@
   <p>
     If you want to query any of the idol girl groups or add a Nippon48 member to
     the database, simply click on the corresponding link in the navigation bar
-    above. Also, if a now former member has graduated (i.e., she recently left
-    her groups), then click on the <i>Delete</i> link in the respective table
-    row to delete her from the database.
+    above. Clicking on a row in the table will direct you to a page where you
+    can edit the stats of the respective member. If she is now a former member
+    who has graduated (i.e., she recently left her groups), then click on the
+    <i>Remove this Nippon48 member</i> button on that page to delete her from
+    the database.
   </p>
   <p id="census-statement"></p>
 

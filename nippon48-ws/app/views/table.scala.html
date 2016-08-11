@@ -1,5 +1,5 @@
 @******************************************************************************
- * Generates an HTML view that lists the specified Nippon48 members and their *
+ * Renders an HTML view that lists the specified Nippon48 members and their   *
  * stats in a table.                                                          *
  *                                                                            *
  * @param group  an ''optional'' that contains the group, or `None` to query  *
@@ -9,21 +9,20 @@
 
 <table class="table">
   <colgroup>
-    <col class="col-md-5 col-sm-4 col-xs-5"/>
-    <col class="col-md-3 col-sm-3 col-xs-4"/>
-    <col class="col-md-1 col-sm-1 col-xs-1"/>
-    <col class="col-md-1 col-sm-1 col-xs-1"/>
-    <col class="col-md-2 col-sm-3 col-xs-1"/>
+    <col class="col-lg-4 col-md-4 col-sm-4 col-xs-5"/>
+    <col class="col-lg-4 col-md-4 col-sm-4 col-xs-5"/>
+    <col class="col-lg-2 col-md-2 col-sm-2 col-xs-1"/>
+    <col class="col-lg-2 col-md-2 col-sm-2 col-xs-1"/>
   </colgroup>
   <tr class="active">
     <th class="text-center">Name</th>
     <th class="text-center">Birthdate (age)</th>
     <th class="text-center">Group(s)</th>
     <th class="text-center">Team(s)</th>
-    <th></th>
   </tr>
   @for(member <- services.Cloudant.getMembers(group)) {
-    <tr>
+    <tr class="editable"
+        data-href="@routes.Nippon48Controller.memberUpdatePage(member.getId)">
       <td>
         <a href="@member.wikiURL">@member.name</a>
         @if(member.nameInJapanese != null) { (@member.nameInJapanese) }
@@ -32,20 +31,7 @@
       <td>@member.fullBirthdate (age @member.age)</td>
       <td class="text-center">@member.groups.mkString("/")</td>
       <td class="text-center">
-        @if(!member.teams.isEmpty) {
-          @member.teams.mkString("/")
-        } else {
-          —
-        }
-      </td>
-      <td class="text-center">
-        <a class="btn btn-info"
-           href="@routes.Nippon48Controller.memberUpdatePage(member.getId)">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </a>
-        <a class="btn btn-danger" data-id="@member.getId">
-          <span class="glyphicon glyphicon-remove"></span>
-        </a>
+        @{ if (!member.teams.isEmpty) member.teams mkString "/" else "—" }
       </td>
     </tr>
   }

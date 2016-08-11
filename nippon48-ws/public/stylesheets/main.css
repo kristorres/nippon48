@@ -3,168 +3,549 @@
  * AUTHOR: Kris Torres
  * DATE:   2016/02/22
  *
- * This stylesheet defines all the overriden selector properties of the minified
- * Bootstrap CSS for the Nippon48 application.
+ * This stylesheet defines all the overridden selector properties of the
+ * minified Bootstrap CSS for the Nippon48 application.
  */
 
-/*------------------------------ General styles ------------------------------*/
+/*---------------------------------- Resets ----------------------------------*/
 
-body {
-  background-color: #F0F0F0;
-  padding-top: 50px;
+ul, ol, pre, form, blockquote {
+  margin: 25px 0;
 }
 
-article {
-  background-color: white;
-  padding: 16px 0;
+a {
+  color: #277BC1;
+  text-decoration: none !important;
 }
 
-@media screen and (min-width: 768px) {
-  article {
-    border-radius: 16px;
-    max-width: 975px;
-    margin-bottom: 48px;
-  }
-}
-
-article .rules {
-  margin: 24px 0;
-}
-
-article ul li {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-  font-size: 16px;
-  margin: 4px 0;
-}
-
-article #error {
-  border: 1px solid #A94442;
-  border-radius: 4px;
-  color: #A94442;
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-  margin: 48px auto;
-  max-width: 700px;
-  min-width: 425px;
-  padding: 2px;
-}
-
-mark {
-  background-color: white;
-  color: red;
+a:hover {
+  color: #1F3F7F;
 }
 
 img {
-  margin: 24px auto;
+  margin: 25px auto;
+}
+
+code {
+  background-color: #E0F0FF;
+  color: dodgerblue;
+  font-family: Menlo, Consolas, Courier, monospace;
+}
+
+span.required {
+  color: #C00000;
+}
+
+span.help-block {
+  color: #C00000 !important;
+}
+
+span.glyphicon {
+  margin-right: 10px;
+}
+
+/*------------------------------ General styles ------------------------------*/
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin-bottom: 50px;
+  padding-top: 50px;
+  padding-bottom: 25px;
+}
+
+hr {
+  border-color: #C0C0C0;
 }
 
 /*------------------------------- Text styles --------------------------------*/
 
-.jumbotron h1 {
-  font-family: Chelsea Market, sans-serif;
-  line-height: 125%;
+h2 {
+  font: 25px Candal, sans-serif;
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .jumbotron h1 {
-    font-size: 48px;
-  }
+h4 {
+  font: 20px Candal, sans-serif;
 }
 
-article h2 {
-  font: 24px Gill Sans;
+p {
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  line-height: 150%;
+  margin-bottom: 10px;
 }
 
-article h3 {
-  font: 22px Gill Sans;
+/*---------------------------------- Alerts ----------------------------------*/
+
+.alert-success {
+  background-color: #F0FFF0;
+  border: 1px solid #00A000;
+  color: #00A000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 25px 0;
 }
 
-article p {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-  font-size: 16px;
+.alert-info {
+  background-color: #E0F0FF;
+  border: 1px solid #0080FF;
+  color: #0080FF;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 25px 0;
 }
 
-footer p {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-  font-size: 12px;
+.alert-warning {
+  background-color: #FFF0E0;
+  border: 1px solid #FF8000;
+  color: #FF8000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 25px 0;
 }
 
-/*---------------------------------- Header ----------------------------------*/
-
-.jumbotron {
-  margin-bottom: 48px;
+.alert-danger {
+  background-color: #FFF0F0;
+  border: 1px solid #C00000;
+  color: #C00000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 25px 0;
 }
 
-@media screen and (max-width: 767px) {
-  .jumbotron {
-    margin-bottom: 0;
-  }
+/*--------------------------------- Buttons ----------------------------------*/
+
+.btn-default {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-default:focus {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+
+.btn-default:hover {
+  background-color: black;
+  border: 1px solid black;
+  color: white
+}
+
+.btn-default:active {
+  background-color: black !important;
+  border: 1px solid black !important;
+  color: white !important;
+}
+
+.btn-default.active {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+}
+
+.btn-default.active:focus {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+}
+
+.btn-default.active:hover {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+}
+
+.btn-primary {
+  background-color: white;
+  border: 1px solid #0000C0;
+  color: #0000C0;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-primary:focus {
+  background-color: white;
+  border: 1px solid #0000C0;
+  color: #0000C0;
+}
+
+.btn-primary:hover {
+  background-color: #0000C0;
+  border: 1px solid #0000C0;
+  color: white
+}
+
+.btn-primary:active {
+  background-color: #0000C0 !important;
+  border: 1px solid #0000C0 !important;
+  color: white !important;
+}
+
+.btn-primary.active {
+  background-color: #0000C0;
+  border: 1px solid #0000C0;
+  color: white;
+}
+
+.btn-primary.active:focus {
+  background-color: #0000C0;
+  border: 1px solid #0000C0;
+  color: white;
+}
+
+.btn-primary.active:hover {
+  background-color: #0000C0;
+  border: 1px solid #0000C0;
+  color: white;
+}
+
+.btn-success {
+  background-color: white;
+  border: 1px solid #00A000;
+  color: #00A000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-success:focus {
+  background-color: white;
+  border: 1px solid #00A000;
+  color: #00A000;
+}
+
+.btn-success:hover {
+  background-color: #00A000;
+  border: 1px solid #00A000;
+  color: white
+}
+
+.btn-success:active {
+  background-color: #00A000 !important;
+  border: 1px solid #00A000 !important;
+  color: white !important;
+}
+
+.btn-success.active {
+  background-color: #00A000;
+  border: 1px solid #00A000;
+  color: white;
+}
+
+.btn-success.active:focus {
+  background-color: #00A000;
+  border: 1px solid #00A000;
+  color: white;
+}
+
+.btn-success.active:hover {
+  background-color: #00A000;
+  border: 1px solid #00A000;
+  color: white;
+}
+
+.btn-info {
+  background-color: white;
+  border: 1px solid #0080FF;
+  color: #0080FF;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-info:focus {
+  background-color: white;
+  border: 1px solid #0080FF;
+  color: #0080FF;
+}
+
+.btn-info:hover {
+  background-color: #0080FF;
+  border: 1px solid #0080FF;
+  color: white;
+}
+
+.btn-info:active {
+  background-color: #0080FF !important;
+  border: 1px solid #0080FF !important;
+  color: white !important;
+}
+
+.btn-info.active {
+  background-color: #0080FF;
+  border: 1px solid #0080FF;
+  color: white;
+}
+
+.btn-info.active:focus {
+  background-color: #0080FF;
+  border: 1px solid #0080FF;
+  color: white;
+}
+
+.btn-info.active:hover {
+  background-color: #0080FF;
+  border: 1px solid #0080FF;
+  color: white;
+}
+
+.btn-warning {
+  background-color: white;
+  border: 1px solid #FF8000;
+  color: #FF8000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-warning:focus {
+  background-color: white;
+  border: 1px solid #FF8000;
+  color: #FF8000;
+}
+
+.btn-warning:hover {
+  background-color: #FF8000;
+  border: 1px solid #FF8000;
+  color: white;
+}
+
+.btn-warning:active {
+  background-color: #FF8000 !important;
+  border: 1px solid #FF8000 !important;
+  color: white !important;
+}
+
+.btn-warning.active {
+  background-color: #FF8000;
+  border: 1px solid #FF8000;
+  color: white;
+}
+
+.btn-warning.active:focus {
+  background-color: #FF8000;
+  border: 1px solid #FF8000;
+  color: white;
+}
+
+.btn-warning.active:hover {
+  background-color: #FF8000;
+  border: 1px solid #FF8000;
+  color: white;
+}
+
+.btn-danger {
+  background-color: white;
+  border: 1px solid #C00000;
+  color: #C00000;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+.btn-danger:focus {
+  background-color: white;
+  border: 1px solid #C00000;
+  color: #C00000;
+}
+
+.btn-danger:hover {
+  background-color: #C00000;
+  border: 1px solid #C00000;
+  color: white;
+}
+
+.btn-danger:active {
+  background-color: #C00000 !important;
+  border: 1px solid #C00000 !important;
+  color: white !important;
+}
+
+.btn-danger.active {
+  background-color: #C00000;
+  border: 1px solid #C00000;
+  color: white;
+}
+
+.btn-danger.active:focus {
+  background-color: #C00000;
+  border: 1px solid #C00000;
+  color: white;
+}
+
+.btn-danger.active:hover {
+  background-color: #C00000;
+  border: 1px solid #C00000;
+  color: white;
+}
+
+#ok-button {
+  width: 100px;
+}
+
+#delete-button {
+  margin: 10px auto;
 }
 
 /*--------------------------- Navigation and menus ---------------------------*/
 
-nav {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+#navigation-light {
+  background-color: white;
+  border-bottom: 1px solid #404040;
+}
+
+#navigation-light .navbar-brand {
+  color: black !important;
+  font: 20px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+#navigation-light .navbar-brand:hover {
+  color: deeppink !important;
+}
+
+#navigation-light .navbar-toggle {
+  background-color: white;
+  border: 2px solid black;
+}
+
+#navigation-light .navbar-toggle > .icon-bar {
+  background-color: black;
+}
+
+#navigation-light .navbar-toggle:hover {
+  border-color: deeppink;
+}
+
+#navigation-light .navbar-toggle:hover > .icon-bar {
+  background-color: deeppink;
+}
+
+#navigation-light .dropdown-toggle {
+  color: black;
+  font: 20px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+#navigation-light .dropdown-toggle:hover {
+  color: deeppink;
+}
+
+#navigation-light .dropdown-menu li a {
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+#navigation-light .dropdown-menu li a:hover {
+  color: deeppink;
+}
+
+#navigation-light .navbar-right li a {
+  color: black;
+  font: 20px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+#navigation-light .navbar-right li a:hover {
+  color: deeppink;
+}
+
+/*-------------------------------- Jumbotrons --------------------------------*/
+
+.jumbotron {
+  padding: 75px 0 50px;
+}
+
+.jumbotron h1 {
+  font: 75px "Luckiest Guy", sans-serif;
+  margin: 0;
+}
+
+.jumbotron p {
+  font: 24px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  line-height: 150%;
+}
+
+/*--------------------------------- Sections ---------------------------------*/
+
+section {
+  margin: 25px 0;
+}
+
+section header {
+  border-bottom: 1px solid #C0C0C0;
+  margin: 25px 0 15px;
+}
+
+section ul > li {
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  line-height: 150%;
+  margin-bottom: 10px;
+}
+
+section ol > li {
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  line-height: 150%;
+  margin-bottom: 10px;
 }
 
 /*---------------------------------- Tables ----------------------------------*/
 
 .table {
-  margin: 48px auto;
+  margin: 25px auto;
 }
 
 .table > tbody > tr > th {
-  border: 1px solid #404040;
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  background-color: #F0F0F0 !important;
+  border: 1px solid black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-weight: bold;
+  line-height: 150%;
   vertical-align: middle;
 }
 
 .table > tbody > tr > td {
-  border: 1px solid #404040;
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  border: 1px solid black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  line-height: 150%;
   vertical-align: middle;
+}
+
+.table > tbody > tr.success > td {
+  background-color: #F0FFF0;
+}
+
+.table > tbody > tr.info > td {
+  background-color: #E0F0FF;
+}
+
+.table > tbody > tr.warning > td {
+  background-color: #FFF0E0;
+}
+
+.table > tbody > tr.danger > td {
+  background-color: #FFF0F0;
 }
 
 .table > tbody > tr:hover > td {
   background-color: #FFFFF0;
 }
 
-.btn-info {
-  margin: 4px;
-}
-
-.btn-danger {
-  margin: 4px;
-}
-
 /*------------------------------- Form inputs --------------------------------*/
 
 form {
-  margin: 24px auto 48px;
-  width: 450px;
+  margin: 25px auto;
+  max-width: 500px;
 }
 
 .form-group {
-  margin: 16px 0;
-}
-
-.form-group > label {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-}
-
-.form-group > span {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  margin: 15px 0;
 }
 
 input[type="text"] {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  border: 1px solid black;
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+input[type="radio"] {
+  border: 1px solid black;
 }
 
 select {
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
-}
-
-.has-error > input[type="text"] {
-  background-color: #FFF0F0;
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
 .radio-button-group {
@@ -182,11 +563,12 @@ select {
 
 .radio label {
   color: black;
-  font-family: -apple-system, Helvetica Neue, Lucida Grande, sans-serif;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
-.btn-default {
-  width: 100px;
+.has-error > input[type="text"] {
+  background-color: #FFF0F0;
+  border-color: #C00000;
 }
 
 /*------------------------------- Date picker --------------------------------*/
@@ -198,8 +580,30 @@ select {
 
 /*---------------------------------- Footer ----------------------------------*/
 
-footer {
-  border-top: 1px solid #808080;
-  margin-top: 24px;
-  padding-top: 16px;
+.footer {
+  background-color: #2A2730;
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  width: 100%;
+}
+
+.footer > .container {
+  height: 100%;
+}
+
+.footer > .container > p {
+  color: white;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 20px 0;
+}
+
+.footer > .container > .text-muted {
+  color: #99979C;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+  margin: 20px 0;
+}
+
+.footer > .container > .text-muted > a {
+  color: white;
 }

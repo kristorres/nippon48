@@ -1,5 +1,5 @@
 @******************************************************************************
- * Generates an HTML body with a form for the user to edit the stats of the   *
+ * Renders an HTML body with a form for the user to edit the stats of the     *
  * specified Nippon48 member in the database.                                 *
  *                                                                            *
  * @param member  the Nippon48 member                                         *
@@ -11,119 +11,145 @@
 @import models.Nippon48Member.{validGroups, validTeams}
 @import models.forms.Nippon48MemberData._
 
-@main(s"Edit Stats for ${member.name} – Nippon48",
-  s"Edit Stats for ${member.name}") {
+@main("Nippon48", Some(s"Edit Stats for ${member.name}")) {
 
-  <!-- The form used to edit the stats of a Nippon48 member in the database. -->
-  @defining(member.getId) { id =>
-    @helper.form(action = routes.Nippon48Controller.editMember(id)) {
+  <section id="idol-career-information">
 
-      <!-- Primary idol girl group combobox -->
-      <div class="form-group">
-        <label for="@{s"pg-$id"}">Primary group: <mark>*</mark></label>
-        <select id="@{s"pg-$id"}"
-                name="@PRIMARY_GROUP_KEY"
-                class="form-control">
-          <option value="">Please select one</option>
-          @for(group <- validGroups) {
-            @if(group == member.groups.head) {
-              <option value="@group" selected>@group</option>
-            } else {
-              <option value="@group">@group</option>
+    <header><h2>Idol Career Information</h2></header>
+
+    <!-- The form used to edit the stats of a Nippon48 member in the database. -->
+    @defining(member.getId) { id =>
+      @helper.form(action = routes.Nippon48Controller.editMember(id)) {
+
+        <!-- Primary idol girl group combobox -->
+        <div class="form-group">
+          <label for="@{s"pg-$id"}">
+            Primary group: <span class="required">*</span>
+          </label>
+          <select id="@{s"pg-$id"}"
+                  name="@PRIMARY_GROUP_KEY"
+                  class="form-control">
+            <option value="">Please select one</option>
+            @for(group <- validGroups) {
+              @if(group == member.groups.head) {
+                <option value="@group" selected>@group</option>
+              } else {
+                <option value="@group">@group</option>
+              }
             }
-          }
-        </select>
-      </div>
+          </select>
+        </div>
 
-      <!-- Secondary idol girl group combobox -->
-      <div class="form-group">
-        <label for="@{s"sg-$id"}">Secondary group:</label>
-        <select id="@{s"sg-$id"}"
-                name="@SECONDARY_GROUP_KEY"
-                class="form-control">
-          <option value="">Please select one</option>
-          @for(group <- validGroups) {
-            @if(member.groups.size > 1 && group == member.groups.last) {
-              <option value="@group" selected>@group</option>
-            } else {
-              <option value="@group">@group</option>
+        <!-- Secondary idol girl group combobox -->
+        <div class="form-group">
+          <label for="@{s"sg-$id"}">Secondary group:</label>
+          <select id="@{s"sg-$id"}"
+                  name="@SECONDARY_GROUP_KEY"
+                  class="form-control">
+            <option value="">Please select one</option>
+            @for(group <- validGroups) {
+              @if(member.groups.size > 1 && group == member.groups.last) {
+                <option value="@group" selected>@group</option>
+              } else {
+                <option value="@group">@group</option>
+              }
             }
-          }
-        </select>
-      </div>
+          </select>
+        </div>
 
-      <!-- Primary team combobox -->
-      <div class="form-group">
-        <label for="@{s"pt-$id"}">Primary team:</label>
-        <select id="@{s"pt-$id"}" name="@PRIMARY_TEAM_KEY" class="form-control">
-          <option value="">Please select one</option>
-          @for(team <- validTeams) {
-            @if(!member.teams.isEmpty && team == member.teams.head) {
-              <option value="@team" selected>@team</option>
-            } else {
-              <option value="@team">@team</option>
+        <!-- Primary team combobox -->
+        <div class="form-group">
+          <label for="@{s"pt-$id"}">Primary team:</label>
+          <select id="@{s"pt-$id"}"
+                  name="@PRIMARY_TEAM_KEY"
+                  class="form-control">
+            <option value="">Please select one</option>
+            @for(team <- validTeams) {
+              @if(!member.teams.isEmpty && team == member.teams.head) {
+                <option value="@team" selected>@team</option>
+              } else {
+                <option value="@team">@team</option>
+              }
             }
-          }
-        </select>
-      </div>
+          </select>
+        </div>
 
-      <!-- Secondary team combobox -->
-      <div class="form-group">
-        <label for="@{s"st-$id"}">Secondary team:</label>
-        <select id="@{s"st-$id"}"
-                name="@SECONDARY_TEAM_KEY"
-                class="form-control">
-          <option value="">Please select one</option>
-          @for(team <- validTeams) {
-            @if(member.teams.size > 1 && team == member.teams.last) {
-              <option value="@team" selected>@team</option>
-            } else {
-              <option value="@team">@team</option>
+        <!-- Secondary team combobox -->
+        <div class="form-group">
+          <label for="@{s"st-$id"}">Secondary team:</label>
+          <select id="@{s"st-$id"}"
+                  name="@SECONDARY_TEAM_KEY"
+                  class="form-control">
+            <option value="">Please select one</option>
+            @for(team <- validTeams) {
+              @if(member.teams.size > 1 && team == member.teams.last) {
+                <option value="@team" selected>@team</option>
+              } else {
+                <option value="@team">@team</option>
+              }
             }
+          </select>
+        </div>
+
+        <!-- Captain status radio button group -->
+        <div class="radio-button-group form-group">
+          <label>
+            Is the member a team captain? <span class="required">*</span>
+          </label>
+          @if(member.isCaptain) {
+            <div class="radio">
+              <label>
+                <input name="@CAPTAIN_STATUS_KEY"
+                       type="radio"
+                       value="Yes"
+                       checked/>
+                Yes
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input name="@CAPTAIN_STATUS_KEY" type="radio" value="No"/> No
+              </label>
+            </div>
+          } else {
+            <div class="radio">
+              <label>
+                <input name="@CAPTAIN_STATUS_KEY" type="radio" value="Yes"/> Yes
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input name="@CAPTAIN_STATUS_KEY"
+                       type="radio"
+                       value="No"
+                       checked/>
+                No
+              </label>
+            </div>
           }
-        </select>
-      </div>
+        </div>
 
-      <!-- Captain status radio button group -->
-      <div class="radio-button-group form-group">
-        <label>Is the member a team captain? <mark>*</mark></label>
-        @if(member.isCaptain) {
-          <div class="radio">
-            <label>
-              <input name="@CAPTAIN_STATUS_KEY"
-                     type="radio"
-                     value="Yes"
-                     checked/>
-              Yes
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input name="@CAPTAIN_STATUS_KEY" type="radio" value="No"/> No
-            </label>
-          </div>
-        } else {
-          <div class="radio">
-            <label>
-              <input name="@CAPTAIN_STATUS_KEY" type="radio" value="Yes"/> Yes
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input name="@CAPTAIN_STATUS_KEY"
-                     type="radio"
-                     value="No"
-                     checked/>
-              No
-            </label>
-          </div>
-        }
-      </div>
-
-      <!-- OK button -->
-      <div align="center">
-        <button class="btn btn-default" type="submit">OK</button>
-      </div>
+        <!-- OK button -->
+        <div align="center">
+          <button id="ok-button" class="btn btn-primary" type="submit">
+            OK
+          </button>
+        </div>
+      }
     }
-  }
+
+  </section>
+
+  <section id="danger-zone">
+    <header><h2>Danger Zone</h2></header>
+    <p>
+      Once you remove a Nippon48 member from the database, there is no going
+      back. Please be certain.
+    </p>
+    <div align="center">
+      <button id="delete-button" class="btn btn-danger" data-id="@member.getId">
+        Remove this Nippon48 member
+      </button>
+    </div>
+  </section>
 }

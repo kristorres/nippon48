@@ -1,12 +1,14 @@
 @******************************************************************************
- * Generates an HTML body that displays a 404 Not Found error for the         *
- * specified invalid group.                                                   *
+ * Renders an HTML body that displays a 404 Not Found error for the specified *
+ * invalid group.                                                             *
  *                                                                            *
  * @param group  the name of the invalid group                                *
  ******************************************************************************@
 @(group: String)
 
-@main("Group Not Found – Nippon48", "Group Not Found") {
+@main("Nippon48", Some("Group Not Found")) {
   <img class="img-responsive" src="@routes.Assets.at("images/北原里英.jpg")"/>
-  <h2 align="center">Sorry. The Nippon48 group “@group” does not exist.</h2>
+  <h2 class="text-center">
+    Sorry. The Nippon48 group “@group” does not exist.
+  </h2>
 }

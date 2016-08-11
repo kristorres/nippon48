@@ -1,5 +1,5 @@
 @******************************************************************************
- * Generates an HTML body with a form for the user to edit the stats of the   *
+ * Renders an HTML body with a form for the user to edit the stats of the     *
  * specified Nippon48 member in the database.                                 *
  *                                                                            *
  * @param member  the Nippon48 member                                         *
@@ -14,42 +14,67 @@
 @import models.Nippon48Member.{validGroups, validTeams}
 @import models.forms.Nippon48MemberData._
 
-@main(s"Edit Stats for ${member.name} – Nippon48",
-  s"Edit Stats for ${member.name}") {
+@main("Nippon48", Some(s"Edit Stats for ${member.name}")) {
 
-  <!-- Any error that is not associated to an HTML form element goes here. -->
-  @if(error.isDefined) {
-    <div id="error" class="text-center"><span>@error.get</span></div>
-  }
+  <section id="idol-career-information">
 
-  <!-- The form used to edit the stats of a Nippon48 member in the database. -->
-  @defining(member.getId) { id =>
-    @helper.form(action = routes.Nippon48Controller.editMember(id)) {
+    <header><h2>Idol Career Information</h2></header>
 
-      <!-- Primary idol girl group combobox -->
-      @combobox(form(PRIMARY_GROUP_KEY), s"pg-$id", "Primary group:",
-        validGroups, true)
-
-      <!-- Secondary idol girl group combobox -->
-      @combobox(form(SECONDARY_GROUP_KEY), s"sg-$id", "Secondary group:",
-        validGroups, false)
-
-      <!-- Primary team combobox -->
-      @combobox(form(PRIMARY_TEAM_KEY), s"pt-$id", "Primary team:", validTeams,
-        false)
-
-      <!-- Secondary team combobox -->
-      @combobox(form(SECONDARY_TEAM_KEY), s"st-$id", "Secondary team:",
-        validTeams, false)
-
-      <!-- Captain status radio button group -->
-      @radio(form(CAPTAIN_STATUS_KEY), "Is the member a team captain?",
-        Seq("Yes", "No"), true)
-
-      <!-- OK button -->
-      <div align="center">
-        <button class="btn btn-default" type="submit">OK</button>
+    <!-- Any error that is not associated to an HTML form element goes here. -->
+    @for(error <- error) {
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign"
+              aria-hidden="true">
+        </span>
+        @error
       </div>
     }
-  }
+
+    <!-- The form used to edit the stats of a Nippon48 member in the database. -->
+    @defining(member.getId) { id =>
+      @helper.form(action = routes.Nippon48Controller.editMember(id)) {
+
+        <!-- Primary idol girl group combobox -->
+        @combobox(form(PRIMARY_GROUP_KEY), s"pg-$id", "Primary group:",
+          validGroups, true)
+
+        <!-- Secondary idol girl group combobox -->
+        @combobox(form(SECONDARY_GROUP_KEY), s"sg-$id", "Secondary group:",
+          validGroups, false)
+
+        <!-- Primary team combobox -->
+        @combobox(form(PRIMARY_TEAM_KEY), s"pt-$id", "Primary team:",
+          validTeams, false)
+
+        <!-- Secondary team combobox -->
+        @combobox(form(SECONDARY_TEAM_KEY), s"st-$id", "Secondary team:",
+          validTeams, false)
+
+        <!-- Captain status radio button group -->
+        @radio(form(CAPTAIN_STATUS_KEY), "Is the member a team captain?",
+          Seq("Yes", "No"), true)
+
+        <!-- OK button -->
+        <div align="center">
+          <button id="ok-button" class="btn btn-primary" type="submit">
+            OK
+          </button>
+        </div>
+      }
+    }
+
+  </section>
+
+  <section id="danger-zone">
+    <header><h2>Danger Zone</h2></header>
+    <p>
+      Once you remove a Nippon48 member from the database, there is no going
+      back. Please be certain.
+    </p>
+    <div align="center">
+      <button id="delete-button" class="btn btn-danger" data-id="@member.getId">
+        Remove this Nippon48 member
+      </button>
+    </div>
+  </section>
 }

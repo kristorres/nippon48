@@ -1,6 +1,6 @@
 @******************************************************************************
- * Generates an HTML body with a form for the user to add a Nippon48 member   *
- * to the database.                                                           *
+ * Renders an HTML body with a form for the user to add a Nippon48 member to  *
+ * the database.                                                              *
  *                                                                            *
  * @param form   the HTML form                                                *
  * @param error  an ''optional'' that contains the error message, or `None`   *
@@ -12,10 +12,10 @@
 @import models.Nippon48Member.{validGroups, validTeams}
 @import models.forms.Nippon48MemberData._
 
-@main("Add a New Member – Nippon48", "Add a New Member") {
+@main("Nippon48", Some("Add a New Member")) {
 
-  <div class="rules">
-    <h2>New Nippon48 Member Rules</h2>
+  <section>
+    <header><h2>New Nippon48 Member Rules</h2></header>
     <ul>
       <li>
         Before adding a new Nippon48 member, check to make sure that the member
@@ -31,14 +31,19 @@
         The information pertaining to the new member must be accurate.
       </li>
     </ul>
-  </div>
+  </section>
   <p>
     Please fill out the form below to add a Nippon48 member to the database:
   </p>
 
   <!-- Any error that is not associated to an HTML form element goes here. -->
-  @if(error.isDefined) {
-    <div id="error" class="text-center"><span>@error.get</span></div>
+  @for(error <- error) {
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign"
+            aria-hidden="true">
+      </span>
+      @error
+    </div>
   }
 
   <!-- The form used to add a Nippon48 member to the database. -->
@@ -79,7 +84,7 @@
 
     <!-- OK button -->
     <div align="center">
-      <button class="btn btn-default" type="submit">OK</button>
+      <button id="ok-button" class="btn btn-primary" type="submit">OK</button>
     </div>
   }
 }

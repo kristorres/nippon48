@@ -23,7 +23,7 @@ function setCensusStatement() {
   var census = $("#census-statement");
   var count = $(".table tr").length - 1;
   var header = $(".jumbotron .container").text();
-  var allMembers = header == "Welcome to Nippon48!";
+  var allMembers = header.includes("Nippon48");
 
   if (count == 0) {
     $(".table").hide();
@@ -73,9 +73,9 @@ function setDatePicker() {
  * @param {String} foreground  the foreground color
  */
 function setJumbotronColors(background, foreground) {
-  var jumbotron = $(".jumbotron");
-  jumbotron.css("background-color", background);
-  jumbotron.css("color", foreground);
+  $(".jumbotron").css("background-color", background);
+  $(".jumbotron h1").css("color", foreground);
+  $(".jumbotron p").css("color", foreground);
 }
 
 //===---------------------------- Main driver -----------------------------===//
@@ -86,7 +86,7 @@ $(document).ready(function() {
   setCensusStatement();
   setDatePicker();
 
-  switch ($(".jumbotron .container").text()) {
+  switch ($(".jumbotron .container h1").text()) {
     case "AKB48": setJumbotronColors("#EE92B0", "white"); break;
     case "SKE48": setJumbotronColors("#EDA72B", "white"); break;
     case "NMB48": setJumbotronColors("#F48700", "white"); break;
@@ -94,19 +94,20 @@ $(document).ready(function() {
     case "NGT48": setJumbotronColors("white", "red"); break;
     case "Nogizaka46": setJumbotronColors("#7E0E85", "white"); break;
     case "Keyakizaka46": setJumbotronColors("#1AB631", "white"); break;
-    default: setJumbotronColors("#FFC0FF", "black");
+    default: setJumbotronColors("deeppink", "white");
   }
 
+  $(".editable").click(function() { window.location = $(this).data("href"); });
+
   // Removes the table row that contains the Nippon48 member.
-  $(".btn-danger").click(function() {
+  $("#delete-button").click(function() {
     var $button = $(this);
     var id = $button.data("id");
     $.ajax({
       url: "/members/" + id,
       type: "DELETE"
     }).done(function() {
-      $button.closest("tr").remove();
-      setCensusStatement();
+      window.location = "/";
     });
   });
 });

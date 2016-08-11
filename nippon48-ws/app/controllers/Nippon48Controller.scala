@@ -101,7 +101,7 @@ object Nippon48Controller extends Controller {
    *
    * @return the `Action` to handle the `GET` request
    */
-  def index = Action { Ok(views.html.index("Welcome to Nippon48!")) }
+  def index = Action { Ok(views.html.index()) }
 
   /**
    * Creates an `Action` to render the page where the user can edit the stats of

@@ -1,5 +1,5 @@
 @******************************************************************************
- * Generates a text field with the specified ID, label, and placeholder. If   *
+ * Renders a text field with the specified ID, label, and placeholder. If     *
  * `isRequired` is `true`, then a red asterisk will appear to the right of    *
  * the label.                                                                 *
  *                                                                            *
@@ -14,7 +14,7 @@
 
 <div class="form-group @if(field.hasErrors) { has-error }">
   @if(isRequired) {
-    <label for="@id">@label <mark>*</mark></label>
+    <label for="@id">@label <span class="required">*</span></label>
   } else {
     <label for="@id">@label</label>
   }

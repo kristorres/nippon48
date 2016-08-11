@@ -1,5 +1,5 @@
 @******************************************************************************
- * Generates a radio button group with the specified label and options. If    *
+ * Renders a radio button group with the specified label and options. If      *
  * `isRequired` is `true`, then a red asterisk will appear to the right of    *
  * the label.                                                                 *
  *                                                                            *
@@ -12,7 +12,7 @@
 
 <div class="radio-button-group form-group @if(field.hasErrors) { has-error }">
   @if(isRequired) {
-    <label>@label <mark>*</mark></label>
+    <label>@label <span class="required">*</span></label>
   } else {
     <label>@label</label>
   }
