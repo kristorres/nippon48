@@ -69,7 +69,7 @@ project. The database must also have the following design document:
   "_id": "_design/members",
   "views": {
     "all": {
-      "map": "function(doc) { emit(doc._id, [doc.name_en, doc.name_jp, doc.birthdate, doc.groups, doc.teams, doc.captain, doc.generation]); }"
+      "map": "function(doc) { emit(doc._id, [doc.name_en, doc.name_jp, doc.birthdate, doc.groups, doc.teams, doc.captain]); }"
     }
   }
 }
