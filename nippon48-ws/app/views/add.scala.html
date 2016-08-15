@@ -60,7 +60,24 @@
       "指原莉乃", false)
 
     <!-- Birthdate text field -->
-    @text(form(BIRTHDATE_KEY), "birthdate", "Birthdate:", "11/21/1992", true)
+    @defining(form(BIRTHDATE_KEY)) { field =>
+      <div class="form-group @if(field.hasErrors) { has-error }">
+        <label for="birthdate">
+          Birthdate: <span class="required">*</span>
+        </label>
+        <input id="birthdate"
+               name="@BIRTHDATE_KEY"
+               class="form-control"
+               type="date"
+               placeholder="1992-11-21"
+               value="@field.value.getOrElse("")"/>
+        @if(field.hasErrors) {
+          <span class="help-block">
+            This field must contain a valid date in the format YYYY-MM-DD.
+          </span>
+        }
+      </div>
+    }
 
     <!-- Primary idol girl group combobox -->
     @combobox(form(PRIMARY_GROUP_KEY), "primary-group", "Primary group:",

@@ -13,6 +13,7 @@
 
 package specs.models
 
+import java.util.Calendar
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
@@ -33,8 +34,11 @@ final class Nippon48MemberSpec extends Specification {
 
     "create an AKB48 member named Yui Yokoyama" in {
 
+      val calendar = Calendar.getInstance
+      calendar.set(1992, Calendar.DECEMBER, 8)
+
       val data = Nippon48MemberData("Yui", "Yokoyama", Some("横山由依"),
-        "12/08/1992", "AKB48", None, Some("A"), None, "Yes")
+        calendar.getTime, "AKB48", None, Some("A"), None, "Yes")
       val member = Nippon48Member(data)
       member setRevision "..."
 
@@ -55,8 +59,11 @@ final class Nippon48MemberSpec extends Specification {
 
     "create an NMB48/AKB48 member named Sayaka Yamamoto" in {
 
+      val calendar = Calendar.getInstance
+      calendar.set(1993, Calendar.JULY, 14)
+
       val data = Nippon48MemberData("Sayaka", "Yamamoto", Some("山本彩"),
-        "07/14/1993", "NMB48", Some("AKB48"), Some("N"), Some("K"), "Yes")
+        calendar.getTime, "NMB48", Some("AKB48"), Some("N"), Some("K"), "Yes")
       val member = Nippon48Member(data)
       member setRevision "..."
 
@@ -77,8 +84,11 @@ final class Nippon48MemberSpec extends Specification {
 
     "create a Nogizaka46 member named Rina Ikoma" in {
 
+      val calendar = Calendar.getInstance
+      calendar.set(1995, Calendar.DECEMBER, 29)
+
       val data = Nippon48MemberData("Rina", "Ikoma", Some("生駒里奈"),
-        "12/29/1995", "Nogizaka46", None, None, None, "No")
+        calendar.getTime, "Nogizaka46", None, None, None, "No")
       val member = Nippon48Member(data)
       member setRevision "..."
 

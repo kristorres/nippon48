@@ -57,13 +57,9 @@ function setDatePicker() {
   var minYear = year - 30;
   var maxYear = year - 12;
 
-  $("#birthdate").datepicker({
-    changeMonth: true,
-    changeYear: true,
-    yearRange: minYear + ":" + maxYear,
-    minDate: month + "/" + day + "/" + minYear,
-    maxDate: month + "/" + day + "/" + maxYear
-  });
+  var $datePicker = $("#birthdate");
+  $datePicker.attr("min", minYear + "-" + month + "-" + day);
+  $datePicker.attr("max", maxYear + "-" + month + "-" + day);
 }
 
 /**

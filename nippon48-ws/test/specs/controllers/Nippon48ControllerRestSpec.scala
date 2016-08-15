@@ -40,7 +40,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Mariko",
                     |  "lastName": "Tsukamoto",
                     |  "name_jp": "塚本まり子",
-                    |  "birthdate": "07/16/1976",
+                    |  "birthdate": "1976-07-16",
                     |  "primaryGroup": "AKB48",
                     |  "primaryTeam": "4",
                     |  "captainStatus": "No"
@@ -62,7 +62,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Nako",
                     |  "lastName": "Yabuki",
                     |  "name_jp": "矢吹奈子",
-                    |  "birthdate": "06/18/2001",
+                    |  "birthdate": "2001-06-18",
                     |  "primaryGroup": "HKT48",
                     |  "secondaryGroup": "HKT48",
                     |  "primaryTeam": "H",
@@ -86,7 +86,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Natsuki",
                     |  "lastName": "Kojima",
                     |  "name_jp": "小嶋菜月",
-                    |  "birthdate": "03/08/1995",
+                    |  "birthdate": "1995-03-08",
                     |  "primaryGroup": "AKB48",
                     |  "secondaryTeam": "A",
                     |  "captainStatus": "No"
@@ -108,7 +108,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Mako",
                     |  "lastName": "Kojima",
                     |  "name_jp": "小嶋真子",
-                    |  "birthdate": "05/30/1997",
+                    |  "birthdate": "1997-05-30",
                     |  "primaryGroup": "AKB48",
                     |  "primaryTeam": "4",
                     |  "secondaryTeam": "4",
@@ -131,7 +131,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Minami",
                     |  "lastName": "Minegishi",
                     |  "name_jp": "峯岸みなみ",
-                    |  "birthdate": "11/15/1992",
+                    |  "birthdate": "1992-11-15",
                     |  "primaryGroup": "AKB48",
                     |  "primaryTeam": "Kenkyuusei",
                     |  "captainStatus": "Yes"
@@ -153,7 +153,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Aimi",
                     |  "lastName": "Eguchi",
                     |  "name_jp": "江口愛実",
-                    |  "birthdate": "02/11/1995",
+                    |  "birthdate": "1995-02-11",
                     |  "primaryGroup": "AKB48",
                     |  "primaryTeam": "Kenkyuusei",
                     |  "captainStatus": "No"
@@ -170,7 +170,7 @@ final class Nippon48ControllerRestSpec extends Specification {
                     |  "firstName": "Aimi",
                     |  "lastName": "Eguchi",
                     |  "name_jp": "江口愛実",
-                    |  "birthdate": "02/11/1995",
+                    |  "birthdate": "1995-02-11",
                     |  "primaryGroup": "AKB48",
                     |  "primaryTeam": "Kenkyuusei",
                     |  "captainStatus": "No"

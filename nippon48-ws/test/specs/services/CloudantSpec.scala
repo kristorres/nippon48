@@ -13,6 +13,7 @@
 
 package specs.services
 
+import java.util.Calendar
 import models.Nippon48Member
 import models.forms.Nippon48MemberData
 import org.specs2.mutable.Specification
@@ -36,8 +37,11 @@ final class CloudantSpec extends Specification {
 
     "add a Nippon48 member" in new WithApplication {
 
+      val calendar = Calendar.getInstance
+      calendar.set(1991, Calendar.JULY, 10)
+
       val data = Nippon48MemberData("Atsuko", "Maeda", Some("前田敦子"),
-        "07/10/1991", "AKB48", None, Some("A"), None, "No")
+        calendar.getTime, "AKB48", None, Some("A"), None, "No")
 
       Cloudant add Nippon48Member(data)
       Nippon48Member("maeda-atsuko") must beSome[Nippon48Member]

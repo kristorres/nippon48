@@ -539,11 +539,18 @@ input[type="text"] {
   font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
+input[type="date"] {
+  border: 1px solid black;
+  color: black;
+  font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
 input[type="radio"] {
   border: 1px solid black;
 }
 
-select {
+select.form-control {
+  border: 1px solid black;
   color: black;
   font: 15px -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
 }
@@ -567,6 +574,16 @@ select {
 }
 
 .has-error > input[type="text"] {
+  background-color: #FFF0F0;
+  border-color: #C00000;
+}
+
+.has-error > input[type="date"] {
+  background-color: #FFF0F0;
+  border-color: #C00000;
+}
+
+.has-error > select.form-control {
   background-color: #FFF0F0;
   border-color: #C00000;
 }

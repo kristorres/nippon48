@@ -13,7 +13,6 @@
 
 package controllers
 
-import java.text.SimpleDateFormat
 import models.Nippon48Member
 import models.forms.{Nippon48MemberData, Nippon48MemberUpdateData}
 import play.api.data.Form
@@ -21,7 +20,6 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 import scala.collection.JavaConverters._
-import scala.util.Try
 import services.Cloudant
 
 /**
@@ -29,17 +27,6 @@ import services.Cloudant
  * add/delete Nippon48 members in the database, and also edit their stats.
  */
 object Nippon48Controller extends Controller {
-
-  //===------------------------- Private mapping --------------------------===//
-
-  /** The mapping for a valid date in the format MM/DD/YYYY. */
-  private val validDate = text.verifying { date =>
-    Try {
-      val dateFormatter = new SimpleDateFormat("MM/dd/yyyy")
-      dateFormatter setLenient false
-      dateFormatter parse date
-    }.isSuccess
-  }
 
   //===-------------------------- Private forms ---------------------------===//
 
@@ -49,7 +36,7 @@ object Nippon48Controller extends Controller {
       Nippon48MemberData.FIRST_NAME_KEY -> nonEmptyText,
       Nippon48MemberData.LAST_NAME_KEY -> nonEmptyText,
       Nippon48MemberData.NAME_JP_KEY -> optional(nonEmptyText),
-      Nippon48MemberData.BIRTHDATE_KEY -> validDate,
+      Nippon48MemberData.BIRTHDATE_KEY -> date,
       Nippon48MemberData.PRIMARY_GROUP_KEY -> nonEmptyText,
       Nippon48MemberData.SECONDARY_GROUP_KEY -> optional(nonEmptyText),
       Nippon48MemberData.PRIMARY_TEAM_KEY -> optional(nonEmptyText),

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation._
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import forms.Nippon48MemberData
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.{Date, Locale}
 import org.ektorp.support.CouchDbDocument
 import org.joda.time.{LocalDate, Years}
 import scala.collection.JavaConverters._
@@ -158,7 +158,7 @@ final class Nippon48Member extends CouchDbDocument {
    */
   @JsonIgnore
   def fullBirthdate: String = {
-    val date = new SimpleDateFormat("MM/dd/yyyy") parse birthdate
+    val date = new SimpleDateFormat("MM/dd/yyyy", Locale.US) parse birthdate
     new SimpleDateFormat("MMMM d, yyyy", Locale.US) format date
   }
 
@@ -290,7 +290,7 @@ object Nippon48Member {
    * @param firstName       the given name
    * @param lastName        the family name
    * @param nameInJapanese  the name in Japanese characters
-   * @param birthdate       the birthdate in the format MM/DD/YYYY
+   * @param birthdate       the birthdate
    * @param groups          the groups
    * @param teams           the teams
    * @param isCaptain       `true` if the Nippon48 member is a captain, or
@@ -299,14 +299,15 @@ object Nippon48Member {
    * @return the Nippon48 member
    */
   def apply(firstName: String, lastName: String, nameInJapanese: String,
-    birthdate: String, groups: java.util.List[String],
+    birthdate: Date, groups: java.util.List[String],
     teams: java.util.List[String], isCaptain: Boolean): Nippon48Member = {
 
     val member = new Nippon48Member
+    val dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US)
     member setId s"${lastName.toLowerCase}-${firstName.toLowerCase}"
     member.setName(firstName, lastName)
     member.nameInJapanese = nameInJapanese
-    member.birthdate = birthdate
+    member.birthdate = dateFormatter format birthdate
     member.groups = groups
     member.teams = teams
     member.isCaptain = isCaptain

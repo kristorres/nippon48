@@ -13,6 +13,8 @@
 
 package models.forms
 
+import java.util.Date
+
 /**
  * The HTML form data for a Nippon48 member.
  *
@@ -20,7 +22,7 @@ package models.forms
  * @param lastName        the family name
  * @param nameInJapanese  an ''optional'' that contains the name in Japanese
  *                        characters, or `None` otherwise
- * @param birthdate       the birthdate in the format MM/DD/YYYY
+ * @param birthdate       the birthdate
  * @param primaryGroup    the primary group
  * @param secondaryGroup  an ''optional'' that contains the secondary group, or
  *                        `None` otherwise
@@ -32,7 +34,7 @@ package models.forms
  *                        otherwise
  */
 final case class Nippon48MemberData(firstName: String, lastName: String,
-  nameInJapanese: Option[String], birthdate: String, primaryGroup: String,
+  nameInJapanese: Option[String], birthdate: Date, primaryGroup: String,
   secondaryGroup: Option[String], primaryTeam: Option[String],
   secondaryTeam: Option[String], isCaptain: String)
 
