@@ -27,19 +27,14 @@ object HelloBuild extends Build {
     "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
   }
 
-  //===----------------------- Project identifiers ------------------------===//
+  //===------------------------ Project identifier ------------------------===//
 
   private val NIPPON48_ID = "nippon48-ws"
-  private val SCRIPTS_ID = "scripts"
 
-  //===----------------------- Project descriptions -----------------------===//
+  //===----------------------- Project description ------------------------===//
 
   lazy val NIPPON48_DESCRIPTION = {
     "The official Play web application dedicated to AKB48!"
-  }
-
-  lazy val SCRIPTS_DESCRIPTION = {
-    "Should only be run locally on the developers’ workstation."
   }
 
   //===----------------------- Project definitions ------------------------===//
@@ -55,15 +50,6 @@ object HelloBuild extends Build {
               description := NIPPON48_DESCRIPTION,
               libraryDependencies += libraryDependency,
               resolvers += resolver)
-
-  lazy val scripts = Project(SCRIPTS_ID, file(SCRIPTS_ID))
-    .settings(name := SCRIPTS_ID,
-              organization := Settings.ORGANIZATION,
-              version := Settings.VERSION,
-              scalaVersion := Settings.SCALA_VERSION,
-              description := SCRIPTS_DESCRIPTION)
-    .dependsOn(nippon48)
-    .aggregate(nippon48)
 
   //===-------------------------- Build settings --------------------------===//
 
