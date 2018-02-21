@@ -1,45 +1,79 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This file specifies intentionally untracked files that Git should ignore.
-# See: http://www.kernel.org/pub/software/scm/git/docs/gitignore.html
+# See: https://help.github.com/articles/ignoring-files/
 #
 # This file is intentionally different from the output of `git svn show-ignore`,
 # as most of those are useless.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Explicit files to ignore.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Finder metadata
 # ~~~~~~~~~~~~~~~
 .DS_Store
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Directories to ignore.
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Scala
+# ~~~~~
+*.class
+*.log
 
-# Root project
-# ~~~~~~~~~~~~
-/.idea
-/logs
+# sbt (Simple Build Tool)
+# ~~~~~~~~~~~~~~~~~~~~~~~
+dist/*
+lib_managed/
+project/boot/
+project/plugins/project/
+src_managed/
+target/
+.cache
+.history
+.lib/
+
+# Play Framework
+# ~~~~~~~~~~~~~~
+/db
+/lib/
+/logs/
+/modules
 /project/project
-/project/target
-/src
-/target
+bin/
+tmp/
+build
+/RUNNING_PID
+server.pid
+test-result
+/.classpath
+/.gradle
+/.project
+/.settings/
+.eclipse
+*.eml
 
-# Nippon48 application
-# ~~~~~~~~~~~~~~~~~~~~
-/nippon48-ws/app/assets
-/nippon48-ws/logs
-/nippon48-ws/project
-/nippon48-ws/target
-/nippon48-ws/test/resources
+# IntelliJ IDEA
+# ~~~~~~~~~~~~~
+/.idea
+/.idea_modules
+/out/
+*.iws
 
-# Cloudant database cleaner
-# ~~~~~~~~~~~~~~~~~~~~~~~~~
-/scripts/logs
-/scripts/project
-/scripts/src/main/java
-/scripts/src/main/resources
-/scripts/src/test
-/scripts/target
+# Eclipse
+# ~~~~~~~
+local.properties
+.cache-main
+.loadpath
+.metadata
+.recommenders/
+.scala_dependencies
+.target
+.worksheet
+*.bak
+*.launch
+*.swp
+*.tmp
+*~.nib
+
+# External tool builders
+# ~~~~~~~~~~~~~~~~~~~~~~
+.externalToolBuilders/
+
+# Java annotation processor (APT)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.factorypath
