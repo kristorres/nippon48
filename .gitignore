@@ -15,65 +15,21 @@
 *.class
 *.log
 
-# sbt (Simple Build Tool)
-# ~~~~~~~~~~~~~~~~~~~~~~~
-dist/*
-lib_managed/
-project/boot/
-project/plugins/project/
-src_managed/
-target/
-.cache
-.history
-.lib/
-
 # Play Framework
 # ~~~~~~~~~~~~~~
-/db
-/lib/
-/logs/
-/modules
-/project/project
-bin/
-tmp/
-build
+build/
+dist/
+lib/
+logs/
+src/
+target/
+/project/project/
 /RUNNING_PID
-server.pid
-test-result
 /.classpath
-/.gradle
 /.project
-/.settings/
-.eclipse
-*.eml
+/.settings
 
 # IntelliJ IDEA
 # ~~~~~~~~~~~~~
 /.idea
 /.idea_modules
-/out/
-*.iws
-
-# Eclipse
-# ~~~~~~~
-local.properties
-.cache-main
-.loadpath
-.metadata
-.recommenders/
-.scala_dependencies
-.target
-.worksheet
-*.bak
-*.launch
-*.swp
-*.tmp
-*~.nib
-
-# External tool builders
-# ~~~~~~~~~~~~~~~~~~~~~~
-.externalToolBuilders/
-
-# Java annotation processor (APT)
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.factorypath
